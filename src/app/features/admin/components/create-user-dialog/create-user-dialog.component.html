@@ -1,0 +1,44 @@
+<div class="w-[300] p-12">
+
+  <h1 class="text-2xl pb-4">Create User</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+    <mat-form-field class="w-full">
+      <mat-label>First Name</mat-label>
+      <input  matInput formControlName="firstName"/>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName"/>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email"/>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password"/>
+    </mat-form-field>
+
+    <div class="flex flex-col">
+      <mat-radio-group  aria-label="Select an option" formControlName="role">
+        <mat-radio-button value="USER">User</mat-radio-button>
+        <mat-radio-button value="USER_MANAGER">UserManager</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group  aria-label="Select an option" formControlName="gender">
+        <mat-radio-button value="Mr">Pan</mat-radio-button>
+        <mat-radio-button value="Mrs">Pani</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+
+    <button mat-raised-button color="primary" type="submit" class="w-full pt-4" [disabled]=!this.form.valid>Create</button>
+  </form>
+
+</div>

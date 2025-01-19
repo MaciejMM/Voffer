@@ -1,0 +1,26 @@
+<div class="unloading">
+  <div class="text-2xl pb-4">Rozładunek</div>
+  <div class="grid grid-cols-12 gap-x-4">
+    <app-country-selector class="grid col-span-3" type="unloading"></app-country-selector>
+    <mat-form-field class="grid col-span-9 ">
+      <mat-label>Kod pocztowy, miasto</mat-label>
+      <input (click)="getLocation()" [formControl]="searchUnloadingCity" matInput placeholder="Kod pocztowy, miasto"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (option of locations$ | async; track option) {
+          <mat-option class="pt-2" (click)="setValues(option)" value="{{option.city}}">
+            <div class="pb-1">{{ option.city }} {{ option.postalCode }}</div>
+            <div class="text-xs">({{ option.displayName }})</div>
+          </mat-option >
+
+        }
+      </mat-autocomplete>
+
+    </mat-form-field>
+  </div>
+  <div class="grid grid-cols-16 gap-x-4">
+    <app-calendar class="grid col-start-1 col-end-6" type="unloading"></app-calendar>
+    <app-time-picker class="grid col-start-6 col-end-12" time="unloadingStartTime"></app-time-picker>
+    <app-time-picker class="grid col-start-12 col-end-17" time="unloadingEndTime"></app-time-picker>
+  </div>
+</div>

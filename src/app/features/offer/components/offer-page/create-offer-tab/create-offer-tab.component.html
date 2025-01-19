@@ -1,0 +1,49 @@
+<form class=" container mx-auto pt-8" [formGroup]="formService.form">
+  <div class="grid grid-cols-2 gap-x-4">
+    <app-loading-section [ngClass]="'col-span-1'"></app-loading-section>
+    <app-unloading-section [ngClass]="'col-span-1'"></app-unloading-section>
+  </div>
+  <div *ngIf="formService.form.errors?.['unloadingBeforeLoading']" class="text-engineering-orange">
+    Unloading cannot be before loading.
+  </div>
+  <div *ngIf="formService.form.errors?.['loadingStartAfterEnd']" class="text-engineering-orange">
+    Loading start time must be before or equal to end time.
+  </div>
+  <div *ngIf="formService.form.errors?.['unloadingStartAfterEnd']" class="text-engineering-orange">
+    Unloading start time must be before or equal to end time.
+  </div>
+  <div class="w-full py-8">
+    <mat-radio-group aria-label="Select an option" [formControl]="truckLoad">
+      <mat-radio-button [checked]="true" value="FTL">FTL</mat-radio-button>
+      <mat-radio-button value="LTL">LTL</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="grid grid-cols-12 grid-rows-2 gap-4">
+    <mat-form-field class="col-span-2 row-span-1">
+      <mat-label>Weight</mat-label>
+      <input [formControl]="weight" matInput min="1" max="999" type="number" placeholder="max 999">
+    </mat-form-field>
+
+    <mat-form-field class=" col-span-2 row-span-1">
+      <mat-label>Lenght</mat-label>
+      <input [formControl]="length" matInput min="1" max="25" type="number" placeholder="max 25">
+    </mat-form-field>
+
+    <mat-form-field class="col-span-2 row-span-1">
+      <mat-label>Volume</mat-label>
+      <input [formControl]="volume" matInput min="1" max="999" type="number" value="" placeholder="max 999">
+    </mat-form-field>
+
+    <mat-form-field class="col-span-6 row-span-2">
+      <mat-label>Description</mat-label>
+      <textarea [formControl]="description" class="textarea1" matInput placeholder="Opis..."></textarea>
+    </mat-form-field>
+    <app-vehicle-selector class="col-span-6"></app-vehicle-selector>
+
+  </div>
+  <div class="">
+    <button (click)="submitOffer()" class="col-span-3 min-h-[50px]" mat-flat-button>Stwórz ofertę</button>
+  </div>
+</form>
+
