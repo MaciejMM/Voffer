@@ -1,23 +1,28 @@
 export type VehicleOfferRequest = {
-
-  loadingPlace: Place;
-  "unloadingPlace": Place;
-  "description": string,
-  "loadingType": string,
-  "loadingWeight": number,
-  "loadingLength": number,
-  "loadingVolume": number,
-  "loadingBodyType": string,
-  "publishSelected": null,
-
+  loadingPlace: LoadingPlace;
+  unloadingPlace: UnloadingPlace;
+  description: string | null;
+  loadingType: string | null;
+  loadingWeight: number | null;
+  loadingLength: number | null;
+  loadingVolume: number | null;
+  loadingBodyType: string | null;
+  goodsType: string | null;
+  publishSelected: null
 }
 
-type Place = {
+export type LoadingPlace = {
   country: string;
   postalCode: string;
   city: string;
-  loadingStartDateAndTime?: string;
-  loadingEndDateAndTime?: string;
-  unloadingDateAndTime?: string;
+  loadingStartDateAndTime: Date;
+  loadingEndDateAndTime: Date;
+}
 
+export type UnloadingPlace = {
+  country: string;
+  postalCode: string;
+  city: string;
+  unloadingStartDateAndTime: Date;
+  unloadingEndDateAndTime: Date;
 }

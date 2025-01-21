@@ -10,9 +10,9 @@
         <mat-autocomplete #auto="matAutocomplete">
           @for (option of locations$ | async; track option) {
             <mat-option class="pt-2" (click)="setValues(option)" value="{{option.city}}">
-                <div class="pb-1">{{ option.city }} {{ option.postalCode }}</div>
-                <div class="text-xs">({{ option.displayName }})</div>
-            </mat-option >
+              <div class="pb-1">{{ option.city }} {{ option.postalCode }}</div>
+              <div class="text-xs">({{ option.displayName }})</div>
+            </mat-option>
 
           }
         </mat-autocomplete>

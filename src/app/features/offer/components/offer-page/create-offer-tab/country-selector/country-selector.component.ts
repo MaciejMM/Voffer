@@ -16,9 +16,9 @@ import {DataService} from '../../../../services/data.service';
   template: `
     <mat-form-field>
       <mat-label>Kraj</mat-label>
-      <mat-select [formControl]="type=='loading' ? loadingCountryCode :  unloadingCountryCode ">
+      <mat-select (selectionChange)="resetCity()"  [formControl]="type=='loading' ? loadingCountryCode :  unloadingCountryCode ">
         @for( country of getSortedCountries();track country.code){
-          <mat-option [value]="country.code">
+          <mat-option  [value]="country.code">
             {{ country.code }}
           </mat-option>
         }
@@ -33,11 +33,15 @@ export class CountrySelectorComponent {
 
   unloadingCountryCode: FormControl;
   loadingCountryCode: FormControl;
+  loadingCity: FormControl;
+  loadingPostalCode: FormControl;
 
   constructor(private readonly formService: VehicleOfferService,
               private readonly dataService: DataService) {
     this.loadingCountryCode = this.formService.getControl('loadingCountryCode');
     this.unloadingCountryCode = this.formService.getControl('unloadingCountryCode');
+    this.loadingCity = this.formService.getControl('loadingCity');
+    this.loadingPostalCode = this.formService.getControl('loadingPostalCode');
   }
 
   getSortedCountries() {
@@ -45,4 +49,8 @@ export class CountrySelectorComponent {
   }
 
 
+  resetCity() {
+    this.loadingCity.setValue('');
+    this.loadingPostalCode.setValue('');
+  }
 }

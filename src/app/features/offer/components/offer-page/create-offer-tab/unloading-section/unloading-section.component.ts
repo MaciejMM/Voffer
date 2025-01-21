@@ -57,8 +57,8 @@ export class UnloadingSectionComponent {
   }
 
   setValues(location: LocationResponse) {
-    this.formService.getControl('unloadCity').setValue(location.city);
-    this.formService.getControl('unloadPostalCode').setValue(location.postalCode);
+    this.formService.getControl('unloadingCity').setValue(location.city);
+    this.formService.getControl('unloadingPostalCode').setValue(location.postalCode);
     this.formService.getControl('unloadingCountryCode').setValue(location.countryCode);
   }
 }

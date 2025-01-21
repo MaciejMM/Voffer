@@ -17,7 +17,6 @@ export class DataService {
     { code: "SOLID_BULK", description: "Solid bulk cargo" }
   ];
 
-
   vehicleTypeList:VehicleType[]  = [
     { vehicleType: "VAN", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
     { vehicleType: "TAUTLINER", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },

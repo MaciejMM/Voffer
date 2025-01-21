@@ -12,6 +12,7 @@ import {AsyncPipe} from '@angular/common';
 import {debounceTime, Observable} from 'rxjs';
 import {LocationResponse} from '../../../../model/LocationResponse';
 import {switchMap} from 'rxjs/operators';
+import {MatProgressBar} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-loading-section',

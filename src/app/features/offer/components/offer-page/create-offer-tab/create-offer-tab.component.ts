@@ -9,8 +9,10 @@ import {VehicleSelectorComponent} from './vehicle-selector/vehicle-selector.comp
 import {LoadingSectionComponent} from './loading-section/loading-section.component';
 import {UnloadingSectionComponent} from './unloading-section/unloading-section.component';
 import {VehicleOfferService} from '../../../services/vehicle-offer-service';
-import {Subscription} from 'rxjs';
 import {NgClass, NgIf} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {VehicleRequestMapperService} from '../../../services/vehicle-request-mapper.service';
+import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.service';
 
 @Component({
   selector: 'app-create-offer-tab',
@@ -27,7 +29,8 @@ import {NgClass, NgIf} from '@angular/common';
     LoadingSectionComponent,
     UnloadingSectionComponent,
     NgClass,
-    NgIf
+    NgIf,
+    MatIcon
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './create-offer-tab.component.html',
@@ -41,7 +44,9 @@ export class CreateOfferTabComponent {
   volume: FormControl;
   truckLoad: FormControl;
 
-  constructor(readonly formService: VehicleOfferService) {
+  constructor(readonly formService: VehicleOfferService,
+              readonly vehicleRequestMapper: VehicleRequestMapperService,
+              readonly vehicleOfferApiService: VehicleOfferApiService) {
     this.description = this.formService.getControl('description');
     this.weight = this.formService.getControl('weight');
     this.length = this.formService.getControl('length');
@@ -51,15 +56,15 @@ export class CreateOfferTabComponent {
 
 
   submitOffer() {
-    this.formService.form.updateValueAndValidity();
-    if (this.formService.form.valid) {
-      // Proceed with form submission
-      console.log('Form is valid, proceed with submission');
-    } else {
-      // Handle validation errors
-      console.log('Form is invalid, handle errors');
-    }
-    console.log(this.formService.form.value);
+    const offer: any = this.formService.getForm()
+    console.log(offer.value);
+    const mapToRequest = this.vehicleRequestMapper.mapToRequest(offer);
+    this.vehicleOfferApiService.createOffer(mapToRequest).subscribe(
+      {
+        next: () => console.log('Offer created'),
+        error: (error) => console.error('Error creating offer', error)
+      }
+    );
   }
 
 }
