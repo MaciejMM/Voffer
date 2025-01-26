@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -30,19 +30,20 @@ import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.se
     UnloadingSectionComponent,
     NgClass,
     NgIf,
-    MatIcon
+    MatIcon,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './create-offer-tab.component.html',
   styleUrl: './create-offer-tab.component.scss'
 })
-export class CreateOfferTabComponent {
+export class CreateOfferTabComponent implements OnInit {
 
   description: FormControl;
   weight: FormControl;
   length: FormControl;
   volume: FormControl;
   truckLoad: FormControl;
+  isFormValid: boolean = false;
 
   constructor(readonly formService: VehicleOfferService,
               readonly vehicleRequestMapper: VehicleRequestMapperService,
@@ -53,9 +54,16 @@ export class CreateOfferTabComponent {
     this.volume = this.formService.getControl('volume');
     this.truckLoad = this.formService.getControl('truckLoad');
   }
+  ngOnInit(): void {
+    this.formService.formStatusChanges().subscribe({
+      next: (status:any) => this.isFormValid = status === 'VALID',
+      error: (error:any) => console.error('Error in form', error)
+    });
+  }
 
 
   submitOffer() {
+    this.formService.isValid();
     const offer: any = this.formService.getForm()
     console.log(offer.value);
     const mapToRequest = this.vehicleRequestMapper.mapToRequest(offer);

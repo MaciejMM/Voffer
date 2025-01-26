@@ -3,7 +3,8 @@
     <app-loading-section [ngClass]="'col-span-1'"></app-loading-section>
     <app-unloading-section [ngClass]="'col-span-1'"></app-unloading-section>
   </div>
-  <div *ngIf="formService.form.errors?.['unloadingBeforeLoading']" class="text-engineering-orange flex flex-row items-center">
+  <div *ngIf="formService.form.errors?.['unloadingBeforeLoading']"
+       class="text-engineering-orange flex flex-row items-center">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
     Unloading cannot be before loading.
   </div>
@@ -44,7 +45,12 @@
 
   </div>
   <div class="">
-    <button (click)="submitOffer()" class="col-span-3 min-h-[50px]" mat-flat-button>Stwórz ofertę</button>
+    <button
+      [disabled]="!isFormValid"
+      (click)="submitOffer()"
+      mat-flat-button>
+      Stwórz ofertę
+    </button>
   </div>
 </form>
 

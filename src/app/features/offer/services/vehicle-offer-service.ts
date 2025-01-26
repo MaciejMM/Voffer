@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {dateAndTimeValidator} from './validators/dateAndTimeValidator';
 import {mergeDateAndTime} from './validators/TimeUtil';
+import {Observable} from 'rxjs';
 
 export type VehicleOfferForm = {
   vehicleType: FormControl<string | null>;
@@ -32,30 +33,33 @@ export type VehicleOfferForm = {
 })
 export class VehicleOfferService {
 
+  currentDay = new Date().getDay();
+  currentMonth = new Date().getMonth()+1;
+  currentYear = new Date().getFullYear();
   form: any = new FormGroup({
-    vehicleType: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    vehicleType: new FormControl('', [Validators.required]),
     goodsType: new FormControl('', Validators.required),
-    loadingStartDate: new FormControl('', Validators.required),
-    loadingEndDate: new FormControl('', Validators.required),
-    loadingStartTime: new FormControl('', Validators.required),
-    loadingEndTime: new FormControl('', Validators.required),
-    loadingCountryCode: new FormControl('', Validators.required),
-    loadingCity: new FormControl('', Validators.required),
-    loadingPostalCode: new FormControl('', Validators.required),
+    loadingStartDate: new FormControl('2025-01-25T10:00:00.000Z', [Validators.required,Validators.min(new Date().getDate())]),
+    loadingEndDate: new FormControl(`2025-01-25T14:00:00.000Z`, Validators.required),
+    loadingStartTime: new FormControl("2025-01-25T00:00:00.000Z", Validators.required),
+    loadingEndTime: new FormControl("2025-01-25T00:30:00.000Z", Validators.required),
+    loadingCountryCode: new FormControl('PL', Validators.required),
+    loadingCity: new FormControl('Poznan', Validators.required),
+    loadingPostalCode: new FormControl('60-203'),
 
-    unloadingStartDate: new FormControl('', Validators.required),
-    unloadingEndDate: new FormControl('', Validators.required),
-    unloadingStartTime: new FormControl('', Validators.required),
-    unloadingEndTime: new FormControl('', Validators.required),
-    unloadingCountryCode: new FormControl('', Validators.required),
-    unloadingCity: new FormControl('', Validators.required),
-    unloadingPostalCode: new FormControl('', Validators.required),
+    unloadingStartDate: new FormControl(new Date().toISOString(), Validators.required),
+    unloadingEndDate: new FormControl("2025-01-25T23:00:00.000Z", Validators.required),
+    unloadingStartTime: new FormControl("2025-01-25T00:30:00.000Z", Validators.required),
+    unloadingEndTime: new FormControl("2025-01-25T00:30:00.000Z", Validators.required),
+    unloadingCountryCode: new FormControl('PL', Validators.required),
+    unloadingCity: new FormControl('Koscian', Validators.required),
+    unloadingPostalCode: new FormControl('64-000'),
 
     truckLoad: new FormControl('FTL', Validators.required),
     description: new FormControl('', Validators.required),
-    weight: new FormControl(0, Validators.required),
-    length: new FormControl(0, Validators.required),
-    volume: new FormControl(0, Validators.required),
+    weight: new FormControl(2, [Validators.required, Validators.min(1), Validators.max(999)]),
+    length: new FormControl(3, [Validators.required, Validators.min(1)]),
+    volume: new FormControl(0, [Validators.required, Validators.min(1)]),
   }, {validators: dateAndTimeValidator(mergeDateAndTime)});
 
   constructor() {
@@ -69,4 +73,10 @@ export class VehicleOfferService {
     return this.form;
   }
 
+  isValid(): boolean {
+    return this.form.valid;
+  }
+  formStatusChanges(): Observable<any> {
+    return this.form.statusChanges;
+  }
 }

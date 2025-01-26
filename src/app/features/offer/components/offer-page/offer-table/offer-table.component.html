@@ -1,1 +1,120 @@
-<p>offer-table works!</p>
+<mat-form-field class="pt-12 w-full">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8 h-[600px]  overflow-y-scroll">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+
+    <ng-container matColumnDef="unloadingPlace.unloadingCity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="text-xs">
+          <div>{{ element.loadingPlace.loadingDateAndTime | date:'yyy-MM-dd' }}</div>
+          <div>
+            {{ element.loadingPlace.loadingDateAndTime | date:'hh:mm' }}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingPlace">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Załadunek</th>
+      <td mat-cell
+          *matCellDef="let element">
+        <div class="flex align-middle">
+          <span [class]="getFlag(element.loadingPlace.loadingCountry)"></span>
+          <span class="pl-1">{{ element.loadingPlace.loadingCity }}
+        </span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unloadingDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="text-xs">
+          <div>{{ element.unloadingPlace.unloadingDateAndTime | date:'yyy-MM-dd' }}</div>
+          <div>
+            {{ element.unloadingPlace.unloadingDateAndTime | date:'hh:mm' }}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unloadingPlace">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rozładunek</th>
+      <td mat-cell
+          *matCellDef="let element">
+        <div class="flex align-middle">
+          <span [class]="getFlag(element.unloadingPlace.unloadingCountry)"></span>
+          <span class="pl-1">{{ element.unloadingPlace.unloadingCity }}</span>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingBodyType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pojazd</th>
+      <td mat-cell *matCellDef="let element">
+        <div>
+          <div>{{ element.loadingBodyType }}</div>
+          <div class="text-xs">{{ element.goodsType }}</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> F/L</th>
+      <td mat-cell *matCellDef="let element"> {{ element.loadingType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingWeight">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga</th>
+      <td mat-cell *matCellDef="let element">{{ element.loadingWeight }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="loadingLength">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Dlugosc</th>
+      <td mat-cell *matCellDef="let element">{{ element.loadingLength }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="loadingVolume">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Wolumen</th>
+      <td mat-cell *matCellDef="let element">{{ element.loadingVolume }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+      <td mat-cell *matCellDef="let element" class="">
+        @if (element.telerouteOfferId === null) {
+          <div matTooltip="Bląd serwera Teleroute. Oferta nie została utworzona. Kliknij Menu -> Odśwież ofertę."
+               class="flex flex-row justify-start items-center">
+            <mat-icon class="text-red-600" fontIcon="error"></mat-icon>
+            <span class="pl-2 underline text-sm">Błąd serwera</span></div>
+        } @else {
+          <div
+            class="flex flex-row justify-start items-center">
+            <mat-icon class="text-green-600" fontIcon="check_circle"></mat-icon>
+            OfferID: {{ element.telerouteOfferId }}
+          </div>
+        }
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Akcje</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Odswież ofertę</button>
+          <button mat-menu-item (click)="deleteOffer(element.id)">Usuń ofertę</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10,25,50]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,8 +1,11 @@
 <app-header></app-header>
 <div class="container mx-auto pt-8">
   <mat-tab-group>
-    <mat-tab label="Stwórz oferte"><app-create-offer-tab></app-create-offer-tab> </mat-tab>
-    <mat-tab label="Oferty"></mat-tab>
+    <mat-tab label="Oferty">
+      <app-offer-table></app-offer-table>
+    </mat-tab>
+    <mat-tab label="Stwórz oferte">
+      <app-create-offer-tab></app-create-offer-tab> </mat-tab>
   </mat-tab-group>
 
 </div>

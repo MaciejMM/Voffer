@@ -37,12 +37,15 @@ export class CalendarComponent {
   loadingEndDate: FormControl;
   unloadingStartDate: FormControl;
   unloadingEndDate: FormControl;
+  minDate: Date;
 
   constructor(private readonly formService: VehicleOfferService) {
     this.loadingStartDate = this.formService.getControl('loadingStartDate');
     this.loadingEndDate = this.formService.getControl('loadingEndDate');
     this.unloadingStartDate = this.formService.getControl('unloadingStartDate');
     this.unloadingEndDate = this.formService.getControl('unloadingEndDate');
+    this.minDate = new Date();
+
   }
 
 }

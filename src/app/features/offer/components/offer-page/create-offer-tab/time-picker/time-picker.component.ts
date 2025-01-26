@@ -27,7 +27,6 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     </mat-form-field>
   `,
   styleUrl: './time-picker.component.scss',
-  encapsulation: ViewEncapsulation.None,
   providers: [provideNativeDateAdapter()]
 })
 export class TimePickerComponent implements OnInit {
