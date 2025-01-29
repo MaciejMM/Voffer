@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../models/User';
 import {UserRequest} from '../models/UserRequest';
+import {environment} from '../../../../environments/environment';
 
 
 @Injectable({
@@ -14,15 +15,15 @@ export class UserService{
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('http://localhost:8080/api/v1/admin/users', {responseType: 'json'});
+    return this.http.get<User[]>(`${environment.backendUrl}/api/v1/admin/users`, {responseType: 'json'});
   }
 
   createUser(user: UserRequest): Observable<any> {
-    return this.http.post<User>('http://localhost:8080/api/v1/admin', user, {responseType: 'json'});
+    return this.http.post<User>(`${environment.backendUrl}/api/v1/admin`, user, {responseType: 'json'});
   }
 
   deleteUser(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:8080/api/v1/admin/${id}`, {responseType: 'json'});
+    return this.http.delete(`${environment.backendUrl}/api/v1/admin/${id}`, {responseType: 'json'});
   }
 
 }

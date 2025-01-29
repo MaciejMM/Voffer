@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node server.js",
+    "build-dev": "ng build --configuration development",
+    "build-test": "ng build --configuration test",
+    "build-prod": "ng build --configuration prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:voffer-app": "node dist/voffer-app/server/server.mjs"
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -23,8 +25,10 @@
     "@angular/platform-server": "^19.0.5",
     "@angular/router": "^19.0.5",
     "@angular/ssr": "^19.0.6",
+    "@ngrx/effects": "^19.0.0",
+    "@ngrx/store": "^19.0.0",
     "@primeng/themes": "^19.0.5",
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "flag-icons": "^7.3.2",
     "ngx-cookie-service": "^19.0.0",
     "primeng": "^19.0.5",
@@ -46,6 +50,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
     "typescript": "~5.5.2"
   }
 }

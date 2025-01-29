@@ -113,13 +113,19 @@ export class OfferTableComponent implements OnDestroy, AfterViewInit {
     const dialogRef = this.dialog.open(DeleteOfferDialogComponent, {
       data: {offerId: id},
     });
-    dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data = this.dataSource.data.filter((offer:Offer) => offer.id !== id);
+
+    dialogRef.afterClosed().subscribe({
+      next: () => {
+        this.dataSource.data = this.dataSource.data.filter((offer: Offer) => offer.id !== id);
+      },
+      error: (error) => {
+        console.error(error);
+        }
     });
 
   }
 
-  getFlag(country:string){
+  getFlag(country: string) {
     return `fi fi-${country.toLowerCase()}`;
   }
 

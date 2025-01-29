@@ -8,30 +8,37 @@ import {CookieService} from 'ngx-cookie-service';
 import {TokenInterceptor} from './app/auth/token.interceptor';
 import {providePrimeNG} from 'primeng/config';
 import Material from '@primeng/themes/material';
+import { provideStore } from '@ngrx/store';
+import * as fromApp from './app/store/global.reducer';
+import {provideEffects} from '@ngrx/effects';
+import {OfferEffects} from './app/store/offer/offer.effects';
 
 bootstrapApplication(AppComponent,
 
   {
     providers: [
-      CookieService,
-      provideRouter(routes),
+    CookieService,
+    provideRouter(routes),
+      provideStore(fromApp.globalReducer),
       {
         provide: HTTP_INTERCEPTORS,
         useClass: TokenInterceptor,
         multi: true
-      },
-      provideAnimationsAsync(),
+    },
+    provideAnimationsAsync(),
+      provideEffects([OfferEffects]),
+
       providePrimeNG({
         theme: {
-          preset: Material,
-          options: {
-            darkModeSelector: 'none'
-          }
+            preset: Material,
+            options: {
+                darkModeSelector: 'none'
+            }
         }
-      }),
-      provideHttpClient(withFetch(), withInterceptorsFromDi()), provideAnimationsAsync(),
-
-    ],
+    }),
+    provideHttpClient(withFetch(), withInterceptorsFromDi()), provideAnimationsAsync(),
+    provideStore()
+],
   }
 )
   .catch((err) => console.error(err));

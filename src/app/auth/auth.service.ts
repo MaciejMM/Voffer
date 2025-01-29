@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, tap, throwError} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<{ token: string, refreshToken: string }>('http://localhost:8080/auth/login', {
+    return this.http.post<{ token: string, refreshToken: string }>(`${environment.backendUrl}/auth/login`, {
       email: username,
       password: password
     }).pipe(
@@ -38,7 +39,7 @@ export class AuthService {
     }
 
     const refreshToken = this.getRefreshToken();
-    return this.http.post<{ token: string, refreshToken:string }>('http://localhost:8080/auth/refresh-token', {token: refreshToken })
+    return this.http.post<{ token: string, refreshToken:string }>(`${environment.backendUrl}/auth/refresh-token`, {token: refreshToken })
       .pipe(
         tap(response => {
           this.setToken(response.token);

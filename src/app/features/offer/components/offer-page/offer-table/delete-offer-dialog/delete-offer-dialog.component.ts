@@ -26,12 +26,20 @@ export class DeleteOfferDialogComponent {
   }
 
   deleteOffer() {
-    this.vehicleOfferApiService.deleteOffer(this.data.offerId).subscribe(() => {
-      this._snackBar.open('Offer deleted', 'OK', {
-        duration: 3000,
+    this.closeDialog();
+    this.vehicleOfferApiService.deleteOffer(this.data.offerId)
+      .subscribe({
+        next: () => {
+          this._snackBar.open('Offer deleted', 'OK', {
+            duration: 3000,
+          });
+        },
+        error: (error) => {
+          this._snackBar.open('Error deleting offer', 'OK', {
+            duration: 3000,
+          });
+        }
       });
-      this.dialogRef.close();
-    });
   }
 
   closeDialog() {

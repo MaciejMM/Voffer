@@ -4,7 +4,7 @@
 </mat-form-field>
 
 <div class="mat-elevation-z8 h-[600px]  overflow-y-scroll">
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" matSort class="h-[55vh]">
     <!-- ID Column -->
 
     <ng-container matColumnDef="unloadingPlace.unloadingCity">
@@ -91,12 +91,12 @@
           <div matTooltip="Bląd serwera Teleroute. Oferta nie została utworzona. Kliknij Menu -> Odśwież ofertę."
                class="flex flex-row justify-start items-center">
             <mat-icon class="text-red-600" fontIcon="error"></mat-icon>
-            <span class="pl-2 underline text-sm">Błąd serwera</span></div>
+            <span class="pl-2 underline text-xs">Błąd serwera</span></div>
         } @else {
           <div
             class="flex flex-row justify-start items-center">
             <mat-icon class="text-green-600" fontIcon="check_circle"></mat-icon>
-            OfferID: {{ element.telerouteOfferId }}
+            <span class="pl-2 text-xs">ID: {{ element.telerouteOfferId }}</span>
           </div>
         }
       </td>
