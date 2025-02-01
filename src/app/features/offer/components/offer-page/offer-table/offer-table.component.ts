@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, inject, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, ViewChild,OnInit} from '@angular/core';
 import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.service';
 import {Offer} from '../../../model/offer';
-import {Subscription} from 'rxjs';
+import * as offerSelectors from '../../../../../store/offer/offer.selectors';
+import {Observable, Subscription} from 'rxjs';
 import {
   MatCell,
   MatCellDef,
@@ -18,7 +19,7 @@ import {
 } from '@angular/material/table';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {DatePipe, LowerCasePipe} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
@@ -27,7 +28,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {DeleteOfferDialogComponent} from './delete-offer-dialog/delete-offer-dialog.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
-
+import {Store} from '@ngrx/store';
+import * as offerActions from '../../../../../store/offer/offer.actions';
 
 @Component({
   selector: 'app-offer-table',
@@ -60,18 +62,22 @@ import {MatTooltip} from '@angular/material/tooltip';
   templateUrl: './offer-table.component.html',
   styleUrl: './offer-table.component.scss'
 })
-export class OfferTableComponent implements OnDestroy, AfterViewInit {
+export class OfferTableComponent implements OnDestroy, AfterViewInit, OnInit {
   displayedColumns: string[] = ['unloadingPlace.unloadingCity', 'loadingPlace', 'unloadingDate', 'unloadingPlace', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
   dataSource: MatTableDataSource<Offer> = new MatTableDataSource();
   readonly dialog = inject(MatDialog);
-
+  offerList$:Observable<Offer[]>;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   OfferTableSubscription$: Subscription;
 
-  constructor(readonly vehicleOfferApiService: VehicleOfferApiService) {
+  constructor(readonly vehicleOfferApiService: VehicleOfferApiService, readonly store: Store) {
+  }
+  ngOnInit() {
+    this.store.dispatch(offerActions.fetchOffers());
+    this.offerList$ = this.store.select(offerSelectors.selectOfferList);
   }
 
   ngAfterViewInit(): void {

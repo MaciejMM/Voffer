@@ -1,7 +1,9 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UserService} from '../../services/user-service';
+import { Store } from '@ngrx/store';
+import * as adminActions from '../../../../store/admin/admin.actions';
+import { selectEditedUserId } from '../../../../store/admin/admin.selectors';
 
 @Component({
   selector: 'app-delete-user-dialog',
@@ -11,25 +13,24 @@ import {UserService} from '../../services/user-service';
   templateUrl: './delete-user-dialog.component.html',
   styleUrl: './delete-user-dialog.component.scss'
 })
-export class DeleteUserDialogComponent {
+export class DeleteUserDialogComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
+  private userId: number;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteUserDialogComponent>,
-    readonly userService: UserService
+    readonly store: Store
   ) {
+  }
+  ngOnInit() {
+    this.store.select(selectEditedUserId).subscribe((id) => {
+      this.userId = id;
+    });
   }
 
   onDelete() {
-    this.userService.deleteUser(this.data.id).subscribe({
-      next: () => {
-        console.log('User deleted');
-        this.dialogRef.close();
-      },
-      error: (error) => {
-        console.error('Error deleting user', error);
-      }
-    } );
+    this.store.dispatch(adminActions.deleteUser({ id: this.userId }));
+    this.dialogRef.close();
   }
 
   onCancel() {

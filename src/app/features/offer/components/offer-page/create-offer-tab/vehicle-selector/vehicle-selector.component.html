@@ -3,7 +3,7 @@
     <mat-label>Typ pojazdu</mat-label>
     <mat-select [formControl]="goodsTypeControl" >
       @for (goodType of goodsTypeList;track goodType.code) {
-        <mat-option   [value]="goodType.code">{{goodType.description}}</mat-option>
+        <mat-option   [value]="goodType.code">{{goodType.translation}}</mat-option>
       }
     </mat-select>
   </mat-form-field>
@@ -11,7 +11,7 @@
     <mat-label>Typ nadwozia</mat-label>
     <mat-select [formControl]="vehicleTypeControl">
       @for (vehicleType of filteredList ; track vehicleType.vehicleType) {
-        <mat-option [value]="vehicleType.vehicleType">{{vehicleType.vehicleType}}</mat-option>
+        <mat-option [value]="vehicleType.vehicleType">{{vehicleType.translation}}</mat-option>
       }
     </mat-select>
   </mat-form-field>

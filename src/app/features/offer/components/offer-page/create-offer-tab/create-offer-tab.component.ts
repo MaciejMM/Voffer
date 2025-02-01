@@ -44,7 +44,7 @@ export class CreateOfferTabComponent implements OnInit {
   volume: FormControl;
   truckLoad: FormControl;
   isFormValid: boolean = false;
-
+  spin: boolean = true;
   constructor(readonly formService: VehicleOfferService,
               readonly vehicleRequestMapper: VehicleRequestMapperService,
               readonly vehicleOfferApiService: VehicleOfferApiService) {

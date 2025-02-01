@@ -6,3 +6,12 @@ export type UserRequest = {
   title: string;
   role: string;
 }
+
+export type UpdateUser = {
+  firstName: string;
+  lastName: string;
+  password:string;
+  title?: string;
+  role?: string;
+  active: boolean;
+}

@@ -48,7 +48,6 @@ export const offerReducer = createReducer(
     isLoading: false,
     displayError: true,
     error: payload.error
-
   })),
   on(OfferActions.deleteOffer, (state) => ({
     ...state,

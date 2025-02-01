@@ -4,15 +4,15 @@
     <app-unloading-section [ngClass]="'col-span-1'"></app-unloading-section>
   </div>
   <div *ngIf="formService.form.errors?.['unloadingBeforeLoading']"
-       class="text-engineering-orange flex flex-row items-center">
+       class="text-engineering-orange flex flex-row items-center mt-2">
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
-    Unloading cannot be before loading.
+    Czas rozładunku nie może być przed czasem załadunku.
   </div>
-  <div *ngIf="formService.form.errors?.['loadingStartAfterEnd']" class="text-engineering-orange">
-    Loading start time must be before or equal to end time.
+  <div *ngIf="formService.form.errors?.['loadingStartAfterEnd']" class="text-engineering-orange mt-2">
+    Czas załadunku nie może być przed czasem rozładunku.
   </div>
-  <div *ngIf="formService.form.errors?.['unloadingStartAfterEnd']" class="text-engineering-orange">
-    Unloading start time must be before or equal to end time.
+  <div *ngIf="formService.form.errors?.['unloadingStartAfterEnd']" class="text-engineering-orange mt-2">
+    Czas rozładunku nie może być przed czasem rozładunku.
   </div>
   <div class="w-full py-8">
     <mat-radio-group aria-label="Select an option" [formControl]="truckLoad">
@@ -23,22 +23,22 @@
 
   <div class="grid grid-cols-12 grid-rows-2 gap-4">
     <mat-form-field class="col-span-2 row-span-1">
-      <mat-label>Weight</mat-label>
+      <mat-label>Waga</mat-label>
       <input [formControl]="weight" matInput min="1" max="999" type="number" placeholder="max 999">
     </mat-form-field>
 
     <mat-form-field class=" col-span-2 row-span-1">
-      <mat-label>Lenght</mat-label>
+      <mat-label>Długość</mat-label>
       <input [formControl]="length" matInput min="1" max="25" type="number" placeholder="max 25">
     </mat-form-field>
 
     <mat-form-field class="col-span-2 row-span-1">
-      <mat-label>Volume</mat-label>
+      <mat-label>Wolumen</mat-label>
       <input [formControl]="volume" matInput min="1" max="999" type="number" value="" placeholder="max 999">
     </mat-form-field>
 
     <mat-form-field class="col-span-6 row-span-2">
-      <mat-label>Description</mat-label>
+      <mat-label>Opis</mat-label>
       <textarea [formControl]="description" class="textarea1" matInput placeholder="Opis..."></textarea>
     </mat-form-field>
     <app-vehicle-selector class="col-span-6"></app-vehicle-selector>
@@ -49,7 +49,7 @@
       [disabled]="!isFormValid"
       (click)="submitOffer()"
       mat-flat-button>
-      Stwórz ofertę
+      <i class="fa-duotone fa-solid fa-spinner"></i>Stwórz ofertę
     </button>
   </div>
 </form>

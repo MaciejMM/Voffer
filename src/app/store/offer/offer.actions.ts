@@ -1,10 +1,11 @@
-import {createAction} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {Offer} from '../../features/offer/model/offer';
 
 enum ActionTypes {
   FETCH_OFFERS = '[Offer] Fetch Offers',
   FETCH_OFFERS_SUCCESS = '[Offer] Fetch Offers Success',
   FETCH_OFFERS_FAILURE = '[Offer] Fetch Offers Failure',
+
 
   CREATE_OFFER = '[Offer] Create Offer',
   CREATE_OFFER_SUCCESS = '[Offer] Create Offer Success',
@@ -18,13 +19,32 @@ enum ActionTypes {
 
 
 export const fetchOffers = createAction(ActionTypes.FETCH_OFFERS);
-export const fetchOffersSuccess = createAction(ActionTypes.FETCH_OFFERS_SUCCESS, (offers: Offer[]) => ({offers}));
-export const fetchOffersFailure = createAction(ActionTypes.FETCH_OFFERS_FAILURE, (error: any) => ({error}));
+export const fetchOffersSuccess = createAction(
+  ActionTypes.FETCH_OFFERS_SUCCESS,
+  props<{ offers: Offer[] }>()
+);
+export const fetchOffersFailure = createAction(
+  ActionTypes.FETCH_OFFERS_FAILURE,
+  (error: any) => ({error}));
 
-export const createOffer = createAction(ActionTypes.CREATE_OFFER, (offer: Offer) => ({offer}));
-export const createOfferSuccess = createAction(ActionTypes.CREATE_OFFER_SUCCESS, (offer: Offer) => ({offer}));
-export const createOfferFailure = createAction(ActionTypes.CREATE_OFFER_FAILURE, (error: any) => ({error}));
+export const createOffer = createAction(ActionTypes.CREATE_OFFER, props<{ offer: Offer }>());
+export const createOfferSuccess = createAction(
+  ActionTypes.CREATE_OFFER_SUCCESS,
+  props<{ offer: Offer }>()
+);
+export const createOfferFailure = createAction(
+  ActionTypes.CREATE_OFFER_FAILURE,
+  props<{ error: any }>()
+);
 
-export const deleteOffer = createAction(ActionTypes.DELETE_OFFER, (id: number) => ({id}));
-export const deleteOfferSuccess = createAction(ActionTypes.DELETE_OFFER_SUCCESS, (id: number) => ({id}));
-export const deleteOfferFailure = createAction(ActionTypes.DELETE_OFFER_FAILURE, (error: any) => ({error}));
+export const deleteOffer = createAction(
+  ActionTypes.DELETE_OFFER,
+  props<{ id: string }>());
+export const deleteOfferSuccess = createAction(
+  ActionTypes.DELETE_OFFER_SUCCESS,
+  props<{ id: number }>()
+);
+export const deleteOfferFailure = createAction(
+  ActionTypes.DELETE_OFFER_FAILURE,
+  props<{ error: any }>()
+);

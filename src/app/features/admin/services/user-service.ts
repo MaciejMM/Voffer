@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../models/User';
-import {UserRequest} from '../models/UserRequest';
+import {UpdateUser, UserRequest} from '../models/UserRequest';
 import {environment} from '../../../../environments/environment';
 
 
@@ -22,7 +22,11 @@ export class UserService{
     return this.http.post<User>(`${environment.backendUrl}/api/v1/admin`, user, {responseType: 'json'});
   }
 
-  deleteUser(id: string): Observable<any> {
+  updateUser(user: UpdateUser, userId:number): Observable<any> {
+    return this.http.put<User>(`${environment.backendUrl}/api/v1/admin/${userId}`, user, {responseType: 'json'});
+  }
+
+  deleteUser(id: number): Observable<any> {
     return this.http.delete(`${environment.backendUrl}/api/v1/admin/${id}`, {responseType: 'json'});
   }
 

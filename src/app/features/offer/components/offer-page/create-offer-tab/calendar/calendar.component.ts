@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, Input, signal} from '@angular/core';
 import {
+  MatDatepickerIntl,
   MatDatepickerToggle,
   MatDateRangeInput,
   MatDateRangePicker,
@@ -8,7 +9,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {VehicleOfferService} from '../../../../services/vehicle-offer-service';
 
 @Component({
@@ -25,7 +26,9 @@ import {VehicleOfferService} from '../../../../services/vehicle-offer-service';
     MatSuffix,
     ReactiveFormsModule
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(),
+    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'},
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',

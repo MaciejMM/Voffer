@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {GoodType, VehicleType} from '../model/VehicleType';
 
 @Injectable({
@@ -6,44 +6,145 @@ import {GoodType, VehicleType} from '../model/VehicleType';
 })
 export class DataService {
 
-  constructor() { }
+  constructor() {
+  }
 
 
   goodsTypeList:GoodType[] = [
-    { code: "ABNORMAL", description: "Abnormal" },
-    { code: "CONTAINER", description: "Container" },
-    { code: "LIQUID_BULK", description: "Liquid bulk cargo" },
-    { code: "GENERAL_MERCHANDISE", description: "General Merchandise" },
-    { code: "SOLID_BULK", description: "Solid bulk cargo" }
+    { code: "ABNORMAL", description: "Abnormal", translation: "Nietypowe" },
+    { code: "CONTAINER", description: "Container", translation: "Kontener" },
+    { code: "LIQUID_BULK", description: "Liquid bulk cargo", translation: "Przewóz materiałów ciekłych" },
+    { code: "GENERAL_MERCHANDISE", description: "General Merchandise", translation: "Ładunki neutralne" },
+    { code: "SOLID_BULK", description: "Solid bulk cargo", translation: "Przewóz materiałów sypkich" },
   ];
 
-  vehicleTypeList:VehicleType[]  = [
-    { vehicleType: "VAN", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "TAUTLINER", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "BOX", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "OPEN", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "TRAX_WALKING_FLOOR", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "COIL", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "JUMBO", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "MEGATRAILER", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise" },
-    { vehicleType: "PUBLIC_WORKS_TIPPERS", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "CEREAL_TIPPER", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "STEEL_TROUGH", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "ARMOURED_TROUGH", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "PALLETABLE_BULK_CARRIERS", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "WALKING_FLOOR", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk" },
-    { vehicleType: "LIQUID_TANK", typeOfGoods: "LIQUID_BULK", matchingValue: "Liquid Bulk" },
-    { vehicleType: "PULVERULENT_TANK", typeOfGoods: "LIQUID_BULK", matchingValue: "Liquid Bulk" },
-    { vehicleType: "MEGATRAILER", typeOfGoods: "ABNORMAL", matchingValue: "Abnormal" },
-    { vehicleType: "FLAT", typeOfGoods: "ABNORMAL", matchingValue: "Abnormal" },
-    { vehicleType: "LOWLOADER", typeOfGoods: "ABNORMAL", matchingValue: "Abnormal" },
-    { vehicleType: "CONTAINER_20", typeOfGoods: "CONTAINER", matchingValue: "Container" },
-    { vehicleType: "CONTAINER_40", typeOfGoods: "CONTAINER", matchingValue: "Container" },
-    { vehicleType: "CONTAINER_45", typeOfGoods: "CONTAINER", matchingValue: "Container" },
-    { vehicleType: "ISOTHERMIC", typeOfGoods: "TEMPERATURE_CONTROLLED", matchingValue: "Temperature Controlled" },
-    { vehicleType: "REFRIGERATED", typeOfGoods: "TEMPERATURE_CONTROLLED", matchingValue: "Temperature Controlled" },
-    { vehicleType: "FREEZER", typeOfGoods: "TEMPERATURE_CONTROLLED", matchingValue: "Temperature Controlled" },
-    { vehicleType: "MULTI_TEMPERATURE", typeOfGoods: "TEMPERATURE_CONTROLLED", matchingValue: "Temperature Controlled" }
+  vehicleTypeList: VehicleType[] = [
+    {vehicleType: "VAN", typeOfGoods: "GENERAL_MERCHANDISE", matchingValue: "General merchandise", translation: "BUS"},
+    {
+      vehicleType: "TAUTLINER",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "FIRANKA"
+    },
+    {
+      vehicleType: "BOX",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "SKRZYNIA"
+    },
+    {
+      vehicleType: "OPEN",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "OTWARTY"
+    },
+    {
+      vehicleType: "TRAX_WALKING_FLOOR",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "TRAX (RUCHOMA PODŁOGA)"
+    },
+    {
+      vehicleType: "COIL",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "MULDA"
+    },
+    {
+      vehicleType: "JUMBO",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "JUMBO"
+    },
+    {
+      vehicleType: "MEGATRAILER",
+      typeOfGoods: "GENERAL_MERCHANDISE",
+      matchingValue: "General merchandise",
+      translation: "MEGA"
+    },
+    {
+      vehicleType: "PUBLIC_WORKS_TIPPERS",
+      typeOfGoods: "SOLID_BULK",
+      matchingValue: "Solid Bulk",
+      translation: "WYWROTKA DO PRAC PUBLICZNYCH"
+    },
+    {
+      vehicleType: "CEREAL_TIPPER",
+      typeOfGoods: "SOLID_BULK",
+      matchingValue: "Solid Bulk",
+      translation: "WYWROTKA DO ZBÓŻ"
+    },
+    {vehicleType: "STEEL_TROUGH", typeOfGoods: "SOLID_BULK", matchingValue: "Solid Bulk", translation: "WANNA"},
+    {
+      vehicleType: "ARMOURED_TROUGH",
+      typeOfGoods: "SOLID_BULK",
+      matchingValue: "Solid Bulk",
+      translation: "ARMOURED TROUGH"
+    },
+    {
+      vehicleType: "PALLETABLE_BULK_CARRIERS",
+      typeOfGoods: "SOLID_BULK",
+      matchingValue: "Solid Bulk",
+      translation: "SPALETYZOWANY TOWAR LUZEM"
+    },
+    {
+      vehicleType: "WALKING_FLOOR",
+      typeOfGoods: "SOLID_BULK",
+      matchingValue: "Solid Bulk",
+      translation: "RUCHOMA PODŁOGA"
+    },
+    {vehicleType: "LIQUID_TANK", typeOfGoods: "LIQUID_BULK", matchingValue: "Liquid Bulk", translation: "CYSTERNA"},
+    {vehicleType: "PULVERULENT_TANK", typeOfGoods: "LIQUID_BULK", matchingValue: "Liquid Bulk", translation: "SILOS"},
+    {vehicleType: "MEGATRAILER", typeOfGoods: "ABNORMAL", matchingValue: "Abnormal", translation: "MEGA"},
+    {vehicleType: "FLAT", typeOfGoods: "ABNORMAL", matchingValue: "Abnormal", translation: "PLATFORMA"},
+    {
+      vehicleType: "LOWLOADER",
+      typeOfGoods: "ABNORMAL",
+      matchingValue: "Abnormal",
+      translation: "POJAZD NISKOPODWOZIOWY"
+    },
+    {
+      vehicleType: "CONTAINER_20",
+      typeOfGoods: "CONTAINER",
+      matchingValue: "Container",
+      translation: "KONTENER 20-STOPOWY"
+    },
+    {
+      vehicleType: "CONTAINER_40",
+      typeOfGoods: "CONTAINER",
+      matchingValue: "Container",
+      translation: "KONTENER 40-STOPOWY"
+    },
+    {
+      vehicleType: "CONTAINER_45",
+      typeOfGoods: "CONTAINER",
+      matchingValue: "Container",
+      translation: "KONTENER 45-STOPOWY"
+    },
+    {
+      vehicleType: "ISOTHERMIC",
+      typeOfGoods: "TEMPERATURE_CONTROLLED",
+      matchingValue: "Temperature Controlled",
+      translation: "IZOTERMA"
+    },
+    {
+      vehicleType: "REFRIGERATED",
+      typeOfGoods: "TEMPERATURE_CONTROLLED",
+      matchingValue: "Temperature Controlled",
+      translation: "CHŁODNIA"
+    },
+    {
+      vehicleType: "FREEZER",
+      typeOfGoods: "TEMPERATURE_CONTROLLED",
+      matchingValue: "Temperature Controlled",
+      translation: "MROŹNIA"
+    },
+    {
+      vehicleType: "MULTI_TEMPERATURE",
+      typeOfGoods: "TEMPERATURE_CONTROLLED",
+      matchingValue: "Temperature Controlled",
+      translation: "MULTI TEMPERATURA"
+    }
   ];
 
   private readonly countries = [
@@ -95,7 +196,7 @@ export class DataService {
     {name: "Russian Federation", code: "RU"},
   ];
 
-  getCountryList(){
+  getCountryList() {
     return this.countries;
   }
 }

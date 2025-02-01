@@ -23,7 +23,7 @@ body {
 
 
 html {
-  color-scheme: light dark;
+  //color-scheme: light dark;
   @include mat.theme((
     color: mat.$cyan-palette,
     typography: Roboto,

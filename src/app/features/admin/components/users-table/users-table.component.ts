@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, inject, OnDestroy, ViewChild} from '@angular/core';
-import {UserService} from '../../services/user-service';
-import {CommonModule} from '@angular/common';
+import { AfterViewInit, Component, inject, OnDestroy, ViewChild } from '@angular/core';
+import { UserService } from '../../services/user-service';
+import { CommonModule } from '@angular/common';
 import {
   MatCell,
   MatColumnDef,
@@ -11,16 +11,21 @@ import {
   MatTableDataSource,
   MatTableModule
 } from '@angular/material/table';
-import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
-import {HttpErrorResponse} from '@angular/common/http';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {Subscription} from 'rxjs';
-import {MatDialog} from '@angular/material/dialog';
-import {DeleteUserDialogComponent} from '../delete-user-dialog/delete-user-dialog.component';
-import {User} from '../../models/User';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
+import { User } from '../../models/User';
+import { Store } from '@ngrx/store';
+import * as  AdminState from '../../../../store/admin/admin.reducer';
+import * as adminActions from '../../../../store/admin/admin.actions';
+import { AdminDialogService } from '../../services/admin-dialog.service';
+import * as adminSelectors from '../../../../store/admin/admin.selectors';
 
 @Component({
   selector: 'users-table',
@@ -41,7 +46,10 @@ export class UsersTableComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(readonly userService: UserService) {
+  constructor(readonly userService: UserService,
+    readonly store: Store<AdminState.State>,
+    readonly adminDialogService: AdminDialogService
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -50,9 +58,12 @@ export class UsersTableComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.getUsers$();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.store.dispatch(adminActions.fetchUsers());
+    this.usersSubscription$ = this.store.select(adminSelectors.selectUserList).subscribe((users: User[]) => {
+      this.dataSource.data = users;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(event: Event) {
@@ -64,25 +75,13 @@ export class UsersTableComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  getUsers$() {
-    this.usersSubscription$ = this.userService.getUsers().subscribe({
-        next: (res) => {
-          this.dataSource.data = res
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error)
-        }
-      }
-    );
+  showDeleteDialog(userId: number) {
+    this.store.dispatch(adminActions.setEditedUserId({ id: userId }));
+    this.adminDialogService.openDeleteUserDialog(userId);
   }
 
-  showDeleteDialog(userId: User) {
-    this.dialog.open(DeleteUserDialogComponent, {
-      data: {
-        email: userId.email,
-        id: userId.id
-      }
-    });
+  showUpdateDialog(userId: number) {
+    this.store.dispatch(adminActions.setEditedUserId({ id: userId }));
+    this.adminDialogService.openEditUserDialog();
   }
-
 }
