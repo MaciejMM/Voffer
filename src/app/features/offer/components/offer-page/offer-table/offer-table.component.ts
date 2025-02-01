@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, inject, OnDestroy, ViewChild, OnInit} from '@angular/core';
-import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.service';
+import {Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Offer, OfferFlat} from '../../../model/offer';
 import * as offerSelectors from '../../../../../store/offer/offer.selectors';
-import {map, Observable, Subscription} from 'rxjs';
+import {map, Subscription} from 'rxjs';
 import {
   MatCell,
   MatCellDef,
@@ -65,7 +64,7 @@ import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.servic
   styleUrl: './offer-table.component.scss'
 })
 export class OfferTableComponent implements OnDestroy, OnInit {
-  displayedColumns: string[] = ['loadingDate', 'loadingPlace', 'unloadingDate', 'unloadingPlace', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
+  displayedColumns: string[] = ['loadingDateAndTime', 'loadingCity', 'unloadingDateAndTime', 'unloadingCity', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
   dataSource: MatTableDataSource<OfferFlat> = new MatTableDataSource();
   readonly dialog = inject(MatDialog);
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
@@ -95,9 +94,7 @@ export class OfferTableComponent implements OnDestroy, OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
-
+    this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
