@@ -6,3 +6,6 @@ export const selectOfferList = createSelector(selectOfferState, (state: State) =
 export const selectDisplayError = createSelector(selectOfferState, (state: State) => state.displayError);
 export const selectDisplaySuccess = createSelector(selectOfferState, (state: State) => state.displaySuccess);
 export const selectError = createSelector(selectOfferState, (state: State) => state.error);
+
+export const selectIsLoading = createSelector(selectOfferState, (state: State) => state.isLoading);
+export const selectEditingOfferId = createSelector(selectOfferState, (state: State) => state.editingOfferId);

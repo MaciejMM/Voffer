@@ -199,4 +199,14 @@ export class DataService {
   getCountryList() {
     return this.countries;
   }
+
+
+  getTranslationForVehicleType(vehicleType: string): string {
+    return this.vehicleTypeList?.find(v => v.vehicleType === vehicleType)?.translation ?? vehicleType;
+  }
+
+  getTranslationForGoodsType(goodsType: string): string {
+    return this.goodsTypeList?.find(g => g.code === goodsType)?.translation ?? goodsType;
+  }
+
 }

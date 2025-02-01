@@ -1,12 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MatButton} from '@angular/material/button';
-import {VehicleOfferApiService} from '../../../../services/api/vehicle-offer-api.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-
-export type DialogData =  {
-  offerId: number;
-}
+import {MatDialogRef} from '@angular/material/dialog';
+import * as offerSelectors from '../../../../../../store/offer/offer.selectors';
+import {Store} from '@ngrx/store';
+import * as offerActions from '../../../../../../store/offer/offer.actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-delete-offer-dialog',
@@ -16,30 +14,27 @@ export type DialogData =  {
   templateUrl: './delete-offer-dialog.component.html',
   styleUrl: './delete-offer-dialog.component.scss'
 })
-export class DeleteOfferDialogComponent {
+export class DeleteOfferDialogComponent implements OnInit, OnDestroy {
   readonly dialogRef = inject(MatDialogRef<DeleteOfferDialogComponent>);
-  private _snackBar = inject(MatSnackBar);
-  readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  deletedOfferId: number;
+  subscription$: Subscription;
 
+  constructor(readonly store: Store) {
+  }
 
-  constructor(readonly vehicleOfferApiService: VehicleOfferApiService) {
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
+  }
+
+  ngOnInit() {
+    this.subscription$ = this.store.select(offerSelectors.selectEditingOfferId).subscribe((editingOfferId) => {
+      this.deletedOfferId = editingOfferId!;
+    });
   }
 
   deleteOffer() {
+    this.store.dispatch(offerActions.deleteOffer({id: this.deletedOfferId}));
     this.closeDialog();
-    this.vehicleOfferApiService.deleteOffer(this.data.offerId)
-      .subscribe({
-        next: () => {
-          this._snackBar.open('Offer deleted', 'OK', {
-            duration: 3000,
-          });
-        },
-        error: (error) => {
-          this._snackBar.open('Error deleting offer', 'OK', {
-            duration: 3000,
-          });
-        }
-      });
   }
 
   closeDialog() {

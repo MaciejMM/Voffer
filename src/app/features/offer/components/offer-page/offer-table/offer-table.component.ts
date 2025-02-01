@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, inject, OnDestroy, ViewChild,OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, ViewChild, OnInit} from '@angular/core';
 import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.service';
-import {Offer} from '../../../model/offer';
+import {Offer, OfferFlat} from '../../../model/offer';
 import * as offerSelectors from '../../../../../store/offer/offer.selectors';
-import {Observable, Subscription} from 'rxjs';
+import {map, Observable, Subscription} from 'rxjs';
 import {
   MatCell,
   MatCellDef,
@@ -30,6 +30,8 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {Store} from '@ngrx/store';
 import * as offerActions from '../../../../../store/offer/offer.actions';
+import {DataService} from '../../../services/data.service';
+import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.service';
 
 @Component({
   selector: 'app-offer-table',
@@ -62,44 +64,34 @@ import * as offerActions from '../../../../../store/offer/offer.actions';
   templateUrl: './offer-table.component.html',
   styleUrl: './offer-table.component.scss'
 })
-export class OfferTableComponent implements OnDestroy, AfterViewInit, OnInit {
-  displayedColumns: string[] = ['unloadingPlace.unloadingCity', 'loadingPlace', 'unloadingDate', 'unloadingPlace', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
-  dataSource: MatTableDataSource<Offer> = new MatTableDataSource();
+export class OfferTableComponent implements OnDestroy, OnInit {
+  displayedColumns: string[] = ['loadingDate', 'loadingPlace', 'unloadingDate', 'unloadingPlace', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
+  dataSource: MatTableDataSource<OfferFlat> = new MatTableDataSource();
   readonly dialog = inject(MatDialog);
-  offerList$:Observable<Offer[]>;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   OfferTableSubscription$: Subscription;
 
-  constructor(readonly vehicleOfferApiService: VehicleOfferApiService, readonly store: Store) {
-  }
-  ngOnInit() {
-    this.store.dispatch(offerActions.fetchOffers());
-    this.offerList$ = this.store.select(offerSelectors.selectOfferList);
+  constructor(
+    readonly store: Store,
+    readonly dataService: DataService,
+    readonly flatOfferMapper: FlatOfferMapperService
+  ) {
   }
 
-  ngAfterViewInit(): void {
-    this.OfferTableSubscription$ = this.vehicleOfferApiService.getOffers().subscribe((offers: Offer[]) => {
-      this.dataSource = new MatTableDataSource(offers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sortingDataAccessor = (item: Offer, property: string) => {
-        switch (property) {
-          case 'unloadingPlace.unloadingCity':
-            return item.unloadingPlace.unloadingCity;
-          case 'unloadingPlace.unloadingDateAndTime':
-            return item.unloadingPlace.unloadingDateAndTime;
-          case 'loadingPlace.loadingCity':
-            return item.loadingPlace.loadingCity;
-          case 'loadingPlace.loadingDateAndTime':
-            return item.loadingPlace.loadingDateAndTime;
-          default:
-            return item["id"];
-        }
-      };
-      this.dataSource.sort = this.sort;
-    });
+  ngOnInit() {
+    this.store.dispatch(offerActions.fetchOffers());
+    this.store.select(offerSelectors.selectOfferList).pipe(
+      map((offers: Offer[]) => this.flatOfferMapper.map(offers)
+      ))
+      .subscribe((offers: OfferFlat[]) => {
+        this.dataSource = new MatTableDataSource(offers);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+
   }
 
   applyFilter(event: Event) {
@@ -116,19 +108,8 @@ export class OfferTableComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   deleteOffer(id: number) {
-    const dialogRef = this.dialog.open(DeleteOfferDialogComponent, {
-      data: {offerId: id},
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: () => {
-        this.dataSource.data = this.dataSource.data.filter((offer: Offer) => offer.id !== id);
-      },
-      error: (error) => {
-        console.error(error);
-        }
-    });
-
+    this.store.dispatch(offerActions.setEditingOfferId({id: id}));
+    this.dialog.open(DeleteOfferDialogComponent);
   }
 
   getFlag(country: string) {

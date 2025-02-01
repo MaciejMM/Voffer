@@ -15,6 +15,7 @@ enum ActionTypes {
   DELETE_OFFER_SUCCESS = '[Offer] Delete Offer Success',
   DELETE_OFFER_FAILURE = '[Offer] Delete Offer Failure',
 
+  SET_EDITING_OFFER_ID = '[Offer] Set Editing Offer Id',
 }
 
 
@@ -27,7 +28,9 @@ export const fetchOffersFailure = createAction(
   ActionTypes.FETCH_OFFERS_FAILURE,
   (error: any) => ({error}));
 
-export const createOffer = createAction(ActionTypes.CREATE_OFFER, props<{ offer: Offer }>());
+export const createOffer = createAction(
+  ActionTypes.CREATE_OFFER,
+  props<{ offer: Offer }>());
 export const createOfferSuccess = createAction(
   ActionTypes.CREATE_OFFER_SUCCESS,
   props<{ offer: Offer }>()
@@ -39,7 +42,7 @@ export const createOfferFailure = createAction(
 
 export const deleteOffer = createAction(
   ActionTypes.DELETE_OFFER,
-  props<{ id: string }>());
+  props<{ id: number }>());
 export const deleteOfferSuccess = createAction(
   ActionTypes.DELETE_OFFER_SUCCESS,
   props<{ id: number }>()
@@ -47,4 +50,9 @@ export const deleteOfferSuccess = createAction(
 export const deleteOfferFailure = createAction(
   ActionTypes.DELETE_OFFER_FAILURE,
   props<{ error: any }>()
+);
+
+export const setEditingOfferId = createAction(
+  ActionTypes.SET_EDITING_OFFER_ID,
+  props<{ id: number }>()
 );

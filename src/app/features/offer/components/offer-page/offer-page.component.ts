@@ -18,14 +18,6 @@ import {OfferTableComponent} from './offer-table/offer-table.component';
 
 })
 export class OfferPageComponent {
-
-   goodsTypeList = [
-    { code: "ABNORMAL", description: "Abnormal" },
-    { code: "CONTAINER", description: "Container" },
-    { code: "LIQUID_BULK", description: "Liquid bulk cargo" },
-    { code: "GENERAL_MERCHANDISE", description: "General Merchandise" },
-    { code: "SOLID_BULK", description: "Solid bulk cargo" }
-  ];
   constructor() {
   }
 

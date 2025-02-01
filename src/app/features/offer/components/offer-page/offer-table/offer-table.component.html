@@ -7,13 +7,13 @@
   <table mat-table [dataSource]="dataSource" matSort class="h-[55vh]">
     <!-- ID Column -->
 
-    <ng-container matColumnDef="unloadingPlace.unloadingCity">
+    <ng-container matColumnDef="loadingDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
       <td mat-cell *matCellDef="let element">
         <div class="text-xs">
-          <div>{{ element.loadingPlace.loadingDateAndTime | date:'yyy-MM-dd' }}</div>
+          <div>{{ element.loadingDateAndTime | date:'yyy-MM-dd' }}</div>
           <div>
-            {{ element.loadingPlace.loadingDateAndTime | date:'hh:mm' }}
+            {{ element.loadingDateAndTime | date:'hh:mm' }}
           </div>
         </div>
       </td>
@@ -24,8 +24,8 @@
       <td mat-cell
           *matCellDef="let element">
         <div class="flex align-middle">
-          <span [class]="getFlag(element.loadingPlace.loadingCountry)"></span>
-          <span class="pl-1">{{ element.loadingPlace.loadingCity }}
+          <span [class]="getFlag(element.loadingCountry)"></span>
+          <span class="pl-1">{{ element.loadingCity }}
         </span>
         </div>
       </td>
@@ -35,9 +35,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
       <td mat-cell *matCellDef="let element">
         <div class="text-xs">
-          <div>{{ element.unloadingPlace.unloadingDateAndTime | date:'yyy-MM-dd' }}</div>
+          <div>{{ element.unloadingDateAndTime | date:'yyy-MM-dd' }}</div>
           <div>
-            {{ element.unloadingPlace.unloadingDateAndTime | date:'hh:mm' }}
+            {{ element.unloadingDateAndTime | date:'hh:mm' }}
           </div>
         </div>
       </td>
@@ -48,8 +48,8 @@
       <td mat-cell
           *matCellDef="let element">
         <div class="flex align-middle">
-          <span [class]="getFlag(element.unloadingPlace.unloadingCountry)"></span>
-          <span class="pl-1">{{ element.unloadingPlace.unloadingCity }}</span>
+          <span [class]="getFlag(element.unloadingCountry)"></span>
+          <span class="pl-1">{{ element.unloadingCity }}</span>
         </div>
 
       </td>
@@ -59,8 +59,8 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Pojazd</th>
       <td mat-cell *matCellDef="let element">
         <div>
-          <div>{{ element.loadingBodyType }}</div>
-          <div class="text-xs">{{ element.goodsType }}</div>
+          <div>{{ dataService.getTranslationForGoodsType(element.goodsType) }}</div>
+          <div class="text-xs">{{   dataService.getTranslationForVehicleType(element.loadingBodyType) }}</div>
         </div>
       </td>
     </ng-container>
@@ -113,8 +113,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[10,25,50]" showFirstLastButtons></mat-paginator>
 </div>
+<mat-paginator [pageSizeOptions]="[10,25,50]" showFirstLastButtons></mat-paginator>

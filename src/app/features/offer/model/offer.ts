@@ -26,22 +26,20 @@ export type Offer = {
   loadingLength: string;
   loadingVolume: string | null;
   loadingBodyType: string | null;
+  goodsType: string;
 }
 
 export type OfferFlat = {
   id: number;
-  userId: number | null;
   telerouteOfferId: string;
   telerouteExternalId: string;
   timoconOfferId: string | null;
   transeuOfferId: string | null;
   publishDateTime: string;
-  loadingId: number;
   loadingCountry: string;
   loadingCity: string;
   loadingPostalCode: string | null;
   loadingDateAndTime: string;
-  unloadingId: number;
   unloadingCountry: string;
   unloadingCity: string;
   unloadingPostalCode: string | null;
@@ -52,4 +50,5 @@ export type OfferFlat = {
   loadingLength: string;
   loadingVolume: string | null;
   loadingBodyType: string | null;
+  goodsType: string;
 }

@@ -14,7 +14,8 @@ export class OfferEffects {
     private readonly actions$: Actions,
     private offerService: VehicleOfferApiService,
     private readonly store: Store<OfferState.State>
-  ) {}
+  ) {
+  }
 
 
   loadOffers$ = createEffect(() =>
@@ -23,14 +24,44 @@ export class OfferEffects {
       switchMap(() =>
         this.offerService.getOffers().pipe(
           map((res: Offer[]) => {
-            return offerActions.fetchOffersSuccess({ offers: res });
+            return offerActions.fetchOffersSuccess({offers: res});
           }),
           catchError((error: any) => {
-            return of(offerActions.fetchOffersFailure({ error }));
+            return of(offerActions.fetchOffersFailure({error}));
           })
         )
-    ) )
+      ))
   );
 
+  createOffer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(offerActions.createOffer),
+      mergeMap(action =>
+        this.offerService.createOffer(action.offer).pipe(
+          map((res: any) => {
+            return offerActions.createOfferSuccess({offer: res});
+          }),
+          catchError((error: any) => {
+            return of(offerActions.createOfferFailure({error}));
+          })
+        )
+      )
+    )
+  );
+
+
+  deleteOffer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(offerActions.deleteOffer),
+      mergeMap(action =>
+        this.offerService.deleteOffer(action.id).pipe(
+          map(() => offerActions.deleteOfferSuccess({id: action.id})),
+          catchError((error: any) => {
+            return of(offerActions.deleteOfferFailure({error}));
+          })
+        )
+      )
+    )
+  );
 
 }

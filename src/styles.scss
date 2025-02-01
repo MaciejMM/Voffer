@@ -21,12 +21,14 @@ body {
 }
 
 
-
 html {
   //color-scheme: light dark;
   @include mat.theme((
-    color: mat.$cyan-palette,
     typography: Roboto,
     density: 0
   ));
+}
+
+mat-mdc-row {
+  height: 52px
 }

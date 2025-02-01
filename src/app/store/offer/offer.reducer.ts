@@ -7,13 +7,17 @@ export type State = {
   displayError: boolean;
   displaySuccess: boolean;
   error: any;
+  isLoading?: boolean;
+  editingOfferId?: number;
 }
 
 export const initialState: State = {
   offerList: [],
   displayError: false,
   displaySuccess: false,
-  error: null
+  error: null,
+  isLoading: false,
+  editingOfferId: 0
 }
 
 export const offerReducer = createReducer(
@@ -64,5 +68,9 @@ export const offerReducer = createReducer(
     isLoading: false,
     displayError: true,
     error: payload.error
-  }))
+  })),
+  on(OfferActions.setEditingOfferId, (state, payload) => ({
+    ...state,
+    editingOfferId: payload.id
+  })),
 )

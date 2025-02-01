@@ -9,5 +9,4 @@ export type GoodType = {
   code: string;
   description: string;
   translation:string;
-
 }
