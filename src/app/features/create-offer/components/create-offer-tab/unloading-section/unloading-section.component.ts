@@ -1,33 +1,33 @@
 import {Component} from '@angular/core';
-import {CountrySelectorComponent} from '../country-selector/country-selector.component';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {CalendarComponent} from '../calendar/calendar.component';
 import {MatInput} from '@angular/material/input';
-import {TimePickerComponent} from '../time-picker/time-picker.component';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {VehicleOfferService} from '../../../../services/vehicle-offer-service';
 import {AsyncPipe} from '@angular/common';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {debounceTime, Observable} from 'rxjs';
-import {LocationResponse} from '../../../../model/LocationResponse';
-import {LocationSearchService} from '../../../../services/location-search.service';
 import {switchMap} from 'rxjs/operators';
+import {LocationResponse} from '../../../../offer/model/LocationResponse';
+import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
+import {LocationSearchService} from '../../../../offer/services/location-search.service';
+import {CountrySelectorComponent} from '../country-selector/country-selector.component';
+import {CalendarComponent} from '../calendar/calendar.component';
+import {TimePickerComponent} from '../time-picker/time-picker.component';
 
 @Component({
   selector: 'app-unloading-section',
   imports: [
-    CountrySelectorComponent,
     MatFormField,
-    CalendarComponent,
     MatInput,
     MatLabel,
-    TimePickerComponent,
     FormsModule,
     ReactiveFormsModule,
     AsyncPipe,
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatOption,
+    CountrySelectorComponent,
+    CalendarComponent,
+    TimePickerComponent,
   ],
   templateUrl: './unloading-section.component.html',
   styleUrl: './unloading-section.component.scss'

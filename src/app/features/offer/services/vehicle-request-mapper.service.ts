@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {mergeDateAndTime} from './validators/TimeUtil';
-import {VehicleOfferForm} from './vehicle-offer-service';
+import {LoadingPlace, UnloadingPlace, VehicleOfferRequest} from '../model/VehicleOfferRequest';
 
 
 @Injectable({
@@ -11,7 +11,7 @@ export class VehicleRequestMapperService {
   constructor() {
   }
 
-  public mapToRequest(form: any) {
+  public mapToRequest(form: any):VehicleOfferRequest {
     return {
       loadingPlace: this.mapLoadingPlace(form),
       unloadingPlace: this.mapUnloadingPlace(form),
@@ -23,17 +23,10 @@ export class VehicleRequestMapperService {
       loadingBodyType: form.value.vehicleType,
       goodsType: form.value.goodsType,
       publishSelected: null
-
     }
   }
 
-  private mapLoadingPlace(form: any): {
-    country: string | null | undefined;
-    postalCode: string | null | undefined;
-    city: string | null;
-    loadingStartDateAndTime: Date;
-    loadingEndDateAndTime: Date
-  } {
+  private mapLoadingPlace(form: any):LoadingPlace{
     return {
       country: form.value.loadingCountryCode,
       postalCode: form.value.loadingPostalCode ?? null,
@@ -43,13 +36,7 @@ export class VehicleRequestMapperService {
     }
   }
 
-  private mapUnloadingPlace(form: any): {
-    country: string | null | undefined;
-    postalCode: string | null | undefined;
-    city: string | null;
-    unloadingStartDateAndTime: Date;
-    unloadingEndDateAndTime: Date
-  } {
+  private mapUnloadingPlace(form: any):UnloadingPlace{
     return {
       country: form.value.unloadingCountryCode,
       postalCode: form.value.unloadingPostalCode ?? null,

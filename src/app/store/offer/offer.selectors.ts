@@ -9,3 +9,6 @@ export const selectError = createSelector(selectOfferState, (state: State) => st
 
 export const selectIsLoading = createSelector(selectOfferState, (state: State) => state.isLoading);
 export const selectEditingOfferId = createSelector(selectOfferState, (state: State) => state.editingOfferId);
+
+export const selectIsTelerouteTokenFetching = createSelector(selectOfferState, (state: State) => state.isTelerouteTokenFetching);
+export const selectTelerouteTokenError = createSelector(selectOfferState, (state: State) => state.telerouteTokenError);

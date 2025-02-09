@@ -5,7 +5,7 @@ $platinum: #e0e3e2ff;
 $night: #101414ff;
 $asparagus: #698f3fff;
 $engineering-orange: #c20114ff;
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @tailwind base;
 @tailwind components;
@@ -32,3 +32,4 @@ html {
 mat-mdc-row {
   height: 52px
 }
+

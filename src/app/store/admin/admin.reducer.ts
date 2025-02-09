@@ -8,6 +8,7 @@ export type State= {
     displayError: boolean;
     displaySuccess: boolean;
     error: any;
+    isLoading: boolean;
 }
 
 export const initialState:State = {
@@ -15,7 +16,8 @@ export const initialState:State = {
     editedUserId: 0,
     displayError: false,
     displaySuccess: false,
-    error: null
+    error: null,
+    isLoading: false
 }
 
 
@@ -88,7 +90,7 @@ export const adminReducer = createReducer(
         ...state,
         editedUserId: payload.id
     }),
-)   
+)
 
 )
 

@@ -1,14 +1,17 @@
 import {createReducer, on} from '@ngrx/store';
-import {Offer} from '../../features/offer/model/offer';
+import {Offer} from '../../features/offer/model/Offer';
 import * as OfferActions from './offer.actions';
+import {ErrorResponse} from '../../shared/model/ErrorResponse';
 
 export type State = {
   offerList: Offer[];
   displayError: boolean;
   displaySuccess: boolean;
   error: any;
-  isLoading?: boolean;
+  isLoading: boolean;
   editingOfferId?: number;
+  isTelerouteTokenFetching: boolean;
+  telerouteTokenError: ErrorResponse | null;
 }
 
 export const initialState: State = {
@@ -17,7 +20,9 @@ export const initialState: State = {
   displaySuccess: false,
   error: null,
   isLoading: false,
-  editingOfferId: 0
+  editingOfferId: 0,
+  isTelerouteTokenFetching: false,
+  telerouteTokenError: null
 }
 
 export const offerReducer = createReducer(
@@ -73,4 +78,18 @@ export const offerReducer = createReducer(
     ...state,
     editingOfferId: payload.id
   })),
+
+  on(OfferActions.fetchTelerouteToken, (state) => ({
+    ...state,
+    isTelerouteTokenFetching: true
+  })),
+  on(OfferActions.fetchTelerouteTokenSuccess, (state) => ({
+    ...state,
+    isTelerouteTokenFetching: false
+  })),
+  on(OfferActions.fetchTelerouteTokenFailure, (state,payload) => ({
+    ...state,
+    isTelerouteTokenFetching: false,
+    telerouteTokenError: payload.error
+  }))
 )

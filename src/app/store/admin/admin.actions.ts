@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { User } from "../../features/admin/models/User";
 import {UpdateUser, UserRequest} from "../../features/admin/models/UserRequest";
+import {ErrorResponse} from '../../shared/model/ErrorResponse';
 
 enum ActionTypes {
     FETCH_USERS = '[Admin] Fetch Users',
@@ -22,6 +23,8 @@ enum ActionTypes {
     SET_EDITED_USER_ID = '[Admin] Set Edited User Id',
     CLEAR_EDITED_USER_ID = '[Admin] Clear Edited User Id',
 
+    SET_IS_LOADING = '[Admin] Set Is Loading',
+
 }
 
 export const fetchUsers = createAction(ActionTypes.FETCH_USERS);
@@ -41,7 +44,7 @@ export const createUserSuccess = createAction(
     props<{ user: User }>());
 export const createUserFailure = createAction(
     ActionTypes.CREATE_USER_FAILURE,
-    props<{ error: any }>());
+    props<{ error: ErrorResponse }>());
 
 export const updateUser = createAction(
     ActionTypes.UPDATE_USER,
@@ -69,3 +72,7 @@ export const setEditedUserId = createAction(
 
 export const clearEditedUserId = createAction(
     ActionTypes.CLEAR_EDITED_USER_ID);
+
+export const setIsLoading = createAction(
+    ActionTypes.SET_IS_LOADING,
+    props<{ isLoading: boolean }>());

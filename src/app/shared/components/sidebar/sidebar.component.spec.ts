@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateOfferTabComponent } from './create-offer-tab.component';
+import { SidebarComponent } from './sidebar.component';
 
-describe('CreateOfferTabComponent', () => {
-  let component: CreateOfferTabComponent;
-  let fixture: ComponentFixture<CreateOfferTabComponent>;
+describe('SidebarComponent', () => {
+  let component: SidebarComponent;
+  let fixture: ComponentFixture<SidebarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateOfferTabComponent]
+      imports: [SidebarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateOfferTabComponent);
+    fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

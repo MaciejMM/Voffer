@@ -1,3 +1,5 @@
+<div class="text-2xl pb-12">Stwórz ofertę</div>
+
 <form class=" container mx-auto pt-8" [formGroup]="formService.form">
   <div class="grid grid-cols-2 gap-x-4">
     <app-loading-section [ngClass]="'col-span-1'"></app-loading-section>
@@ -45,12 +47,27 @@
 
   </div>
   <div class="">
-    <button
-      [disabled]="!isFormValid"
-      (click)="submitOffer()"
-      mat-flat-button>
-      <i class="fa-duotone fa-solid fa-spinner"></i>Stwórz ofertę
-    </button>
+
+    @if (this.isLoading$ | async) {
+      <button
+        disabled
+        mat-flat-button
+        class="w-64  justify-center items-center"
+      >
+        <mat-spinner [diameter]="24" class="flex"></mat-spinner>
+
+      </button>
+    } @else {
+      <button
+        [disabled]="!isFormValid"
+        (click)="submitOffer()"
+        mat-flat-button
+        class="w-64  justify-center items-center"
+      >
+        <span class="flex">Stwórz ofertę</span>
+      </button>
+    }
+
   </div>
 </form>
 

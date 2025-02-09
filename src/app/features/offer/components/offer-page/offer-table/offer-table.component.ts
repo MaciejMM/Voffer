@@ -1,5 +1,5 @@
 import {Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Offer, OfferFlat} from '../../../model/offer';
+import {Offer, OfferFlat} from '../../../model/Offer';
 import * as offerSelectors from '../../../../../store/offer/offer.selectors';
 import {map, Subscription} from 'rxjs';
 import {
@@ -31,7 +31,6 @@ import {Store} from '@ngrx/store';
 import * as offerActions from '../../../../../store/offer/offer.actions';
 import {DataService} from '../../../services/data.service';
 import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.service';
-
 @Component({
   selector: 'app-offer-table',
   imports: [
@@ -64,13 +63,12 @@ import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.servic
   styleUrl: './offer-table.component.scss'
 })
 export class OfferTableComponent implements OnDestroy, OnInit {
-  displayedColumns: string[] = ['loadingDateAndTime', 'loadingCity', 'unloadingDateAndTime', 'unloadingCity', 'loadingBodyType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
+  displayedColumns: string[] = ['loadingDateAndTime', 'loadingCity', 'unloadingDateAndTime', 'unloadingCity', 'goodsType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
   dataSource: MatTableDataSource<OfferFlat> = new MatTableDataSource();
   readonly dialog = inject(MatDialog);
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   OfferTableSubscription$: Subscription;
 
   constructor(
@@ -82,7 +80,7 @@ export class OfferTableComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.store.dispatch(offerActions.fetchOffers());
-    this.store.select(offerSelectors.selectOfferList).pipe(
+    this.OfferTableSubscription$ = this.store.select(offerSelectors.selectOfferList).pipe(
       map((offers: Offer[]) => this.flatOfferMapper.map(offers)
       ))
       .subscribe((offers: OfferFlat[]) => {

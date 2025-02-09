@@ -2,7 +2,7 @@ export type UserRequest = {
   email: string;
   firstName: string;
   lastName: string;
-  password:string;
+  username: string;
   title: string;
   role: string;
 }

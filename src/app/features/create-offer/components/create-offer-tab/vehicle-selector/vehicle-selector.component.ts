@@ -3,9 +3,9 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/core";
 import {MatSelect} from "@angular/material/select";
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {GoodType, VehicleType} from '../../../../model/VehicleType';
-import {VehicleOfferService} from '../../../../services/vehicle-offer-service';
-import {DataService} from '../../../../services/data.service';
+import {GoodType, VehicleType} from '../../../../offer/model/VehicleType';
+import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
+import {DataService} from '../../../../offer/services/data.service';
 
 @Component({
   selector: 'app-vehicle-selector',

@@ -1,3 +1,14 @@
-<div class="mat-app-background dark-theme">
-  <router-outlet/>
+<div class="mat-app-background">
+  @if (this.kindeAuth.isAuthenticated$ | async) {
+    <mat-drawer-container class="example-container h-[100vh]">
+        <mat-drawer class="h-full px-4" mode="side" opened>
+          <app-sidebar></app-sidebar>
+        </mat-drawer>
+
+      <mat-drawer-content class="h-full p-14 flex flex-col">
+        <router-outlet></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+
+  }
 </div>

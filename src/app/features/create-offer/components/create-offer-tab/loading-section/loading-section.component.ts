@@ -4,15 +4,14 @@ import {CountrySelectorComponent} from "../country-selector/country-selector.com
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {VehicleOfferService} from '../../../../services/vehicle-offer-service';
 import {TimePickerComponent} from '../time-picker/time-picker.component';
-import {LocationSearchService} from '../../../../services/location-search.service';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {AsyncPipe} from '@angular/common';
 import {debounceTime, Observable} from 'rxjs';
-import {LocationResponse} from '../../../../model/LocationResponse';
 import {switchMap} from 'rxjs/operators';
-import {MatProgressBar} from '@angular/material/progress-bar';
+import {LocationResponse} from '../../../../offer/model/LocationResponse';
+import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
+import { LocationSearchService } from '../../../../offer/services/location-search.service';
 
 @Component({
   selector: 'app-loading-section',

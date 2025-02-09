@@ -1,0 +1,16 @@
+<mat-nav-list class="border-r-2 border-gray-200  h-full px-4 grid grid-flow-col gap-y-4">
+  <div class="flex flex-col gap-y-8 py-14">
+    <a mat-list-item class="text-xs" routerLinkActive="active" (click)="navigatePage('vehicle-offer')">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="local_shipping"></mat-icon>
+      Oferty</a>
+
+    <a mat-list-item class="flex align-middle" routerLinkActive="active" (click)="navigatePage('create')">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="local_shipping"></mat-icon>
+      Stwórz oferte</a>
+
+    <mat-divider></mat-divider>
+
+    <button class="mt-16" mat-raised-button color="primary" (click)="logout()">Wyloguj</button>
+  </div>
+
+</mat-nav-list>

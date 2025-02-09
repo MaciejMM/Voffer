@@ -1,0 +1,23 @@
+<form  class=" p-12 flex flex-col" [formGroup]="form"
+       (ngSubmit)="onSubmit()"
+>
+  <div class="text-3xl pb-8"> Zaloguj sie do Teleroute</div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Login</mat-label>
+    <input matInput placeholder="Wprowadź login" value=""  formControlName="username" >
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Hasło</mat-label>
+    <input type="password" matInput placeholder="Wprowadź hasło" value=""  formControlName="password" >
+  </mat-form-field>
+
+  @if(!(this.isFetching$ | async)){
+    <button class="pt-12" mat-flat-button [disabled]="!this.form.valid" type="submit">Zaloguj</button>
+  }@else{
+    <button class="pt-12" mat-flat-button [disabled]="true" type="submit">
+      <mat-spinner [diameter]="24" class="flex"></mat-spinner>
+    </button>
+  }
+
+</form>

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {VehicleRequestMapperService} from '../vehicle-request-mapper.service';
 import {Observable} from 'rxjs';
-import {Offer} from '../../model/offer';
+import {Offer} from '../../model/Offer';
 import {environment} from '../../../../../environments/environment';
 
 @Injectable({

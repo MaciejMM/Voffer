@@ -3,10 +3,8 @@
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
 </mat-form-field>
 
-<div class="mat-elevation-z8 h-[600px]  overflow-y-scroll">
-  <table mat-table [dataSource]="dataSource" matSort class="h-[55vh]">
-    <!-- ID Column -->
-
+<div class="mat-elevation-z8 overflow-y-scroll h-[60vh]">
+  <table mat-table [dataSource]="dataSource" matSort >
     <ng-container matColumnDef="loadingDateAndTime">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
       <td mat-cell *matCellDef="let element">
@@ -55,7 +53,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="loadingBodyType">
+    <ng-container matColumnDef="goodsType">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Pojazd</th>
       <td mat-cell *matCellDef="let element">
         <div>

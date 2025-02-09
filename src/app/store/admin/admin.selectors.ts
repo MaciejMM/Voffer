@@ -8,3 +8,5 @@ export const selectEditedUserId = createSelector(selectAdminState, (state: State
 export const selectDisplayError = createSelector(selectAdminState, (state: State) => state.displayError);
 export const selectDisplaySuccess = createSelector(selectAdminState, (state: State) => state.displaySuccess);
 
+export const selectError = createSelector(selectAdminState, (state: State) => state.error);
+export const selectIsLoading = createSelector(selectAdminState, (state: State) => state.isLoading);

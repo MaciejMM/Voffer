@@ -8,12 +8,17 @@ import {MatButton} from '@angular/material/button';
 import {VehicleSelectorComponent} from './vehicle-selector/vehicle-selector.component';
 import {LoadingSectionComponent} from './loading-section/loading-section.component';
 import {UnloadingSectionComponent} from './unloading-section/unloading-section.component';
-import {VehicleOfferService} from '../../../services/vehicle-offer-service';
-import {NgClass, NgIf} from '@angular/common';
+import {AsyncPipe, NgClass, NgIf} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
-import {VehicleRequestMapperService} from '../../../services/vehicle-request-mapper.service';
-import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.service';
+import {Store} from '@ngrx/store';
+import {MatProgressSpinner, MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {Observable} from 'rxjs';
+import {VehicleOfferService} from '../../../offer/services/vehicle-offer-service';
+import { VehicleRequestMapperService } from '../../../offer/services/vehicle-request-mapper.service';
+import * as offerActions from '../../../../store/offer/offer.actions';
+import * as offerSelectors from '../../../../store/offer/offer.selectors';
 
+import {VehicleOfferRequest} from '../../../offer/model/VehicleOfferRequest';
 @Component({
   selector: 'app-create-offer-tab',
   imports: [
@@ -31,23 +36,25 @@ import {VehicleOfferApiService} from '../../../services/api/vehicle-offer-api.se
     NgClass,
     NgIf,
     MatIcon,
+    MatProgressSpinner,
+    MatProgressSpinnerModule,
+    AsyncPipe
   ],
   providers: [provideNativeDateAdapter()],
-  templateUrl: './create-offer-tab.component.html',
-  styleUrl: './create-offer-tab.component.scss'
+  templateUrl: './create-offer-page.component.html',
+  styleUrl: './create-offer-page.component.scss'
 })
-export class CreateOfferTabComponent implements OnInit {
-
+export class CreateOfferPageComponent implements OnInit {
+  isLoading$: Observable<boolean>;
   description: FormControl;
   weight: FormControl;
   length: FormControl;
   volume: FormControl;
   truckLoad: FormControl;
   isFormValid: boolean = false;
-  spin: boolean = true;
   constructor(readonly formService: VehicleOfferService,
               readonly vehicleRequestMapper: VehicleRequestMapperService,
-              readonly vehicleOfferApiService: VehicleOfferApiService) {
+              readonly store:Store) {
     this.description = this.formService.getControl('description');
     this.weight = this.formService.getControl('weight');
     this.length = this.formService.getControl('length');
@@ -55,6 +62,8 @@ export class CreateOfferTabComponent implements OnInit {
     this.truckLoad = this.formService.getControl('truckLoad');
   }
   ngOnInit(): void {
+    this.isLoading$ = this.store.select(offerSelectors.selectIsLoading);
+
     this.formService.formStatusChanges().subscribe({
       next: (status:any) => this.isFormValid = status === 'VALID',
       error: (error:any) => console.error('Error in form', error)
@@ -63,16 +72,10 @@ export class CreateOfferTabComponent implements OnInit {
 
 
   submitOffer() {
-    this.formService.isValid();
+    this.formService.disableForm();
     const offer: any = this.formService.getForm()
-    console.log(offer.value);
-    const mapToRequest = this.vehicleRequestMapper.mapToRequest(offer);
-    this.vehicleOfferApiService.createOffer(mapToRequest).subscribe(
-      {
-        next: () => console.log('Offer created'),
-        error: (error) => console.error('Error creating offer', error)
-      }
-    );
+    const mapToRequest:VehicleOfferRequest = this.vehicleRequestMapper.mapToRequest(offer);
+    this.store.dispatch(offerActions.createOffer({offer: mapToRequest}));
   }
 
 }

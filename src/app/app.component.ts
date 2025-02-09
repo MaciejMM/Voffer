@@ -1,20 +1,19 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {AuthService} from './auth/auth.service';
+import {MatDrawer, MatDrawerContainer, MatSidenavModule} from '@angular/material/sidenav';
+import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
+import {KindeAngularService} from 'kinde-angular';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatDrawerContainer, MatDrawer, MatSidenavModule, SidebarComponent, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'voffer-frontend';
 
-  constructor(private readonly authService: AuthService) {
-    if (this.authService.isLoggedIn()) {
-      this.authService.refreshToken().subscribe();
-    }
+  constructor(public kindeAuth:KindeAngularService) {
   }
-
 }
