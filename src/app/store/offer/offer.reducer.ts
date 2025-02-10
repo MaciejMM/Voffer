@@ -2,7 +2,6 @@ import {createReducer, on} from '@ngrx/store';
 import {Offer} from '../../features/offer/model/Offer';
 import * as OfferActions from './offer.actions';
 import {ErrorResponse} from '../../shared/model/ErrorResponse';
-import {closeTelerouteLoginDialog} from './offer.actions';
 
 export type State = {
   offerList: Offer[];
@@ -96,7 +95,7 @@ export const offerReducer = createReducer(
     isTelerouteTokenFetching: false,
     telerouteTokenError: payload.error
   })),
-  on(OfferActions.closeTelerouteLoginDialog, (state, payload) => ({
+  on(OfferActions.closeTelerouteLoginDialog, (state) => ({
     ...state,
     showCloseButton:false,
   }))
