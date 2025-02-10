@@ -12,3 +12,5 @@ export const selectEditingOfferId = createSelector(selectOfferState, (state: Sta
 
 export const selectIsTelerouteTokenFetching = createSelector(selectOfferState, (state: State) => state.isTelerouteTokenFetching);
 export const selectTelerouteTokenError = createSelector(selectOfferState, (state: State) => state.telerouteTokenError);
+
+export const selectShowCloseButton = createSelector(selectOfferState, (state: State) => state.showCloseButton);

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormGroup, FormControl, FormsModule, Validators, ReactiveFormsModule} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
@@ -9,6 +9,7 @@ import * as offerSelectors from '../../../store/offer/offer.selectors';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-teleroute-login-dialog',
@@ -27,8 +28,10 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 })
 export class TelerouteLoginDialogComponent {
 
-  isFetching$: Observable<boolean>;
+  readonly dialogRef = inject(MatDialogRef<TelerouteLoginDialogComponent>);
 
+  isFetching$: Observable<boolean>;
+  showCloseButton$: Observable<boolean>;
   form = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
@@ -36,6 +39,7 @@ export class TelerouteLoginDialogComponent {
 
   constructor(private store: Store) {
     this.isFetching$ = this.store.select(offerSelectors.selectIsTelerouteTokenFetching);
+    this.showCloseButton$ = this.store.select(offerSelectors.selectShowCloseButton);
   }
 
   onSubmit() {
@@ -43,6 +47,11 @@ export class TelerouteLoginDialogComponent {
       username: this.form.value.username!,
       password: this.form.value.password!
     }));
+  }
+
+  onClose() {
+    this.store.dispatch(offerActions.closeTelerouteLoginDialog());
+    this.dialogRef.close();
   }
 
 }

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {MatListItem, MatNavList} from "@angular/material/list";
+import {MatNavList} from "@angular/material/list";
 import {Router, RouterLinkActive} from "@angular/router";
 import {KindeAngularService} from 'kinde-angular';
 import {TelerouteLoginDialogComponent} from '../teleroute-login-dialog/teleroute-login-dialog.component';
@@ -11,7 +11,6 @@ import {MatDivider} from '@angular/material/divider';
 @Component({
   selector: 'app-sidebar',
   imports: [
-    MatListItem,
     MatNavList,
     RouterLinkActive,
     MatIcon,

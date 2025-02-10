@@ -1,7 +1,7 @@
 <div class="mat-app-background">
-  @if (this.kindeAuth.isAuthenticated$ | async) {
+  @if (kindeAuth.isAuthenticated$ | async) {
     <mat-drawer-container class="example-container h-[100vh]">
-        <mat-drawer class="h-full px-4" mode="side" opened>
+        <mat-drawer class="h-full " mode="side" opened>
           <app-sidebar></app-sidebar>
         </mat-drawer>
 
@@ -9,6 +9,5 @@
         <router-outlet></router-outlet>
       </mat-drawer-content>
     </mat-drawer-container>
-
   }
 </div>

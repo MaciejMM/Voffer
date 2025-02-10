@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/core";
 import {MatSelect} from "@angular/material/select";
@@ -19,17 +19,22 @@ import {DataService} from '../../../../offer/services/data.service';
   templateUrl: './vehicle-selector.component.html',
   styleUrl: './vehicle-selector.component.scss'
 })
-export class VehicleSelectorComponent {
+export class VehicleSelectorComponent implements OnInit {
 
-  goodsTypeControl :FormControl;
-  vehicleTypeControl :FormControl;
+  goodsTypeControl: FormControl;
+  vehicleTypeControl: FormControl;
   goodsTypeList: GoodType[];
   filteredList: VehicleType[];
   vehicleTypeList: VehicleType[];
 
   constructor(
     private readonly formService: VehicleOfferService,
-    private readonly dataService: DataService) {
+    private readonly dataService: DataService,
+    ) {
+
+  }
+
+  ngOnInit(): void {
     this.goodsTypeList = this.dataService.goodsTypeList;
     this.vehicleTypeList = this.dataService.vehicleTypeList;
     this.goodsTypeControl = this.formService.getControl('goodsType');

@@ -85,6 +85,7 @@ export class OfferEffects {
       mergeMap(action =>
         this.telerouteAuthService.login(action.username, action.password).pipe(
           map(() => {
+            this.snackbarMessageService.showSuccessMessage('Zalogowano do Teleroute');
             return offerActions.fetchTelerouteTokenSuccess();
           }),
           catchError((error: ErrorResponse) => {

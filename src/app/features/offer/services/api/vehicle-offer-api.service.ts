@@ -12,10 +12,9 @@ export class VehicleOfferApiService {
   constructor(readonly http:HttpClient) { }
 
   createOffer(offer: any) {
-
     return this.http.post(`${environment.backendUrl}/api/v1/vehicle-offers`,{
       ...offer
-    } );
+    },{ withCredentials: true } );
   }
 
   getOffers():Observable<Offer[]> {
@@ -23,6 +22,6 @@ export class VehicleOfferApiService {
   }
 
   deleteOffer(id: number) {
-    return this.http.delete(`${environment.backendUrl}/api/v1/vehicle-offers/${id}`);
+    return this.http.delete(`${environment.backendUrl}/api/v1/vehicle-offers/${id}`,{ withCredentials: true } );
   }
 }

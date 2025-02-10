@@ -84,7 +84,6 @@ export class VehicleOfferService {
   }
 
   formStatusChanges(): Observable<any> {
-    console.log(this.form.value);
     return this.form.statusChanges;
   }
 

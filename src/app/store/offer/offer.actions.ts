@@ -23,7 +23,7 @@ enum ActionTypes {
   FETCH_TELEROUTE_TOKEN = '[Offer] Fetch Teleroute Token',
   FETCH_TELEROUTE_TOKEN_SUCCESS = '[Offer] Fetch Teleroute Token Success',
   FETCH_TELEROUTE_TOKEN_FAILURE = '[Offer] Fetch Teleroute Token Failure',
-
+  CLOSE_TELEROUTE_LOGIN_DIALOG = '[Offer] Close Teleroute Login Dialog',
 }
 
 
@@ -82,4 +82,8 @@ export const fetchTelerouteTokenSuccess = createAction(
 export const fetchTelerouteTokenFailure = createAction(
   ActionTypes.FETCH_TELEROUTE_TOKEN_FAILURE,
   props<{ error:ErrorResponse }>()
+);
+
+export const closeTelerouteLoginDialog = createAction(
+  ActionTypes.CLOSE_TELEROUTE_LOGIN_DIALOG
 );

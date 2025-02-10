@@ -84,6 +84,7 @@ export class OfferTableComponent implements OnDestroy, OnInit {
       map((offers: Offer[]) => this.flatOfferMapper.map(offers)
       ))
       .subscribe((offers: OfferFlat[]) => {
+        offers.sort((a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime());
         this.dataSource = new MatTableDataSource(offers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
