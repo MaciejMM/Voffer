@@ -11,7 +11,7 @@ import {debounceTime, Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {LocationResponse} from '../../../../offer/model/LocationResponse';
 import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
-import { LocationSearchService } from '../../../../offer/services/location-search.service';
+import {LocationSearchService} from '../../../../offer/services/location-search.service';
 
 @Component({
   selector: 'app-loading-section',

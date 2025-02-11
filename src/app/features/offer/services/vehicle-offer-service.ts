@@ -53,7 +53,7 @@ export class VehicleOfferService {
     unloadingCity: new FormControl(this.mapDefaultValue('Koscian'), Validators.required),
     unloadingPostalCode: new FormControl(this.mapDefaultValue('64-000')),
 
-    truckLoad: new FormControl(this.mapDefaultValue(this.mapDefaultValue('LTL')), Validators.required),
+    truckLoad: new FormControl('FTL', Validators.required),
     description: new FormControl(this.mapDefaultValue(this.mapDefaultValue('Some description')), Validators.required),
     weight: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(999)]),
     length: new FormControl(1, [Validators.required, Validators.min(1)]),
