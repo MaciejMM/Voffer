@@ -14,6 +14,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AdminEffects } from './app/store/admin/admin.effects';
 import {provideKinde} from 'kinde-angular';
 import {environment} from './environments/environment';
+import {AppEffects} from './app/store/app/app.effects';
 
 bootstrapApplication(AppComponent,
 
@@ -25,7 +26,7 @@ bootstrapApplication(AppComponent,
         maxAge: 25,
         connectInZone: true
       }),
-      provideEffects([OfferEffects,AdminEffects]),
+      provideEffects([OfferEffects,AdminEffects,AppEffects]),
       CookieService,
       {
         provide: HTTP_INTERCEPTORS,

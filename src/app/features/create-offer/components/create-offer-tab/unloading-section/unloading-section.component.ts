@@ -1,17 +1,22 @@
 import {Component} from '@angular/core';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
-import {debounceTime, Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, filter, Observable} from 'rxjs';
 import {LocationResponse} from '../../../../offer/model/LocationResponse';
 import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
 import {LocationSearchService} from '../../../../offer/services/location-search.service';
 import {CountrySelectorComponent} from '../country-selector/country-selector.component';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {TimePickerComponent} from '../time-picker/time-picker.component';
+import * as offerActions from '../../../../../store/offer/offer.actions';
+import {Store} from '@ngrx/store';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import * as offerSelectors from '../../../../../store/offer/offer.selectors';
 
 @Component({
   selector: 'app-unloading-section',
@@ -28,31 +33,32 @@ import {TimePickerComponent} from '../time-picker/time-picker.component';
     CountrySelectorComponent,
     CalendarComponent,
     TimePickerComponent,
+    MatIcon,
+    MatIconButton,
+    MatProgressSpinner,
+    MatSuffix,
   ],
   templateUrl: './unloading-section.component.html',
   styleUrl: './unloading-section.component.scss'
 })
 export class UnloadingSectionComponent {
-  unloadingCity = new FormControl();
-  locations$: Observable<LocationResponse[]>;
-  searchUnloadingCity = new FormControl();
+  unloadingLocations$: Observable<LocationResponse[]>;
+  showUnloadingLocationLoader$: Observable<boolean>;
 
-  constructor(readonly formService: VehicleOfferService, private readonly locationService: LocationSearchService) {
-    this.subscribeToFormControl(this.unloadingCity, 'unloadingCity');
-  }
-
-  private subscribeToFormControl(control: FormControl, controlName: string) {
-    control.valueChanges.subscribe((value: string) => {
-      this.formService.getControl(controlName).setValue(value);
-    });
-  }
-
-  getLocation() {
-    this.locations$ = this.searchUnloadingCity.valueChanges
+  constructor(
+    readonly formService: VehicleOfferService,
+    readonly store: Store) {
+    this.formService.getControl('unloadingCity').valueChanges
       .pipe(
-        debounceTime(1000),
-        switchMap((value: string) => this.locationService.getLocation(value))
+        filter(value => typeof value === 'string' && value.trim().length > 0),
+        distinctUntilChanged()
       )
+      .subscribe(value => {
+        const countryCode = this.formService.getControl('unloadingCountryCode').value
+        this.store.dispatch(offerActions.fetchUnloadingLocations({query: value, countryCode: countryCode}));
+      });
+    this.unloadingLocations$ = this.store.select(offerSelectors.selectUnloadingLocations);
+    this.showUnloadingLocationLoader$ = this.store.select(offerSelectors.selectIsUnloadingLocationFetching);
 
   }
 
@@ -60,5 +66,12 @@ export class UnloadingSectionComponent {
     this.formService.getControl('unloadingCity').setValue(location.city);
     this.formService.getControl('unloadingPostalCode').setValue(location.postalCode);
     this.formService.getControl('unloadingCountryCode').setValue(location.countryCode);
+  }
+
+  clearLoadingFields() {
+    this.formService.getControl('unloadingCity').setValue("");
+    this.formService.getControl('unloadingPostalCode').setValue("");
+    this.formService.getControl('unloadingCountryCode').setValue("");
+    this.store.dispatch(offerActions.resetUnloadingLocations())
   }
 }

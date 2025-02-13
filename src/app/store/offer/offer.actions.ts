@@ -2,6 +2,7 @@ import {createAction, props} from '@ngrx/store';
 import {Offer} from '../../features/offer/model/Offer';
 import {VehicleOfferRequest} from '../../features/offer/model/VehicleOfferRequest';
 import {ErrorResponse} from '../../shared/model/ErrorResponse';
+import {LocationResponse} from '../../features/offer/model/LocationResponse';
 
 enum ActionTypes {
   FETCH_OFFERS = '[Offer] Fetch Offers',
@@ -24,6 +25,17 @@ enum ActionTypes {
   FETCH_TELEROUTE_TOKEN_SUCCESS = '[Offer] Fetch Teleroute Token Success',
   FETCH_TELEROUTE_TOKEN_FAILURE = '[Offer] Fetch Teleroute Token Failure',
   CLOSE_TELEROUTE_LOGIN_DIALOG = '[Offer] Close Teleroute Login Dialog',
+
+  FETCH_LOCATIONS = '[Offer] Fetch Loading Locations',
+  FETCH_LOCATIONS_SUCCESS = '[Offer] Fetch Loading Locations Success',
+  FETCH_LOCATIONS_FAILURE = '[Offer] Fetch Loading Locations Failure',
+
+  FETCH_UNLOADING_LOCATIONS = '[Offer] Fetch Unloading Locations',
+  FETCH_UNLOADING_LOCATIONS_SUCCESS = '[Offer] Fetch Unloading Locations Success',
+  FETCH_UNLOADING_LOCATIONS_FAILURE = '[Offer] Fetch Unloading Locations Failure',
+
+  RESET_LOCATIONS = '[Offer] Reset Locations',
+  RESET_UNLOADING_LOCATIONS = '[Offer] Reset Unloading Locations'
 }
 
 
@@ -87,3 +99,42 @@ export const fetchTelerouteTokenFailure = createAction(
 export const closeTelerouteLoginDialog = createAction(
   ActionTypes.CLOSE_TELEROUTE_LOGIN_DIALOG
 );
+
+export const fetchLoadingLocations = createAction(
+  ActionTypes.FETCH_LOCATIONS,
+  props<{ query: string,countryCode:string }>()
+);
+
+export const fetchLoadingLocationsSuccess = createAction(
+  ActionTypes.FETCH_LOCATIONS_SUCCESS,
+  props<{ locations: LocationResponse[] }>()
+);
+
+export const fetchLoadingLocationsFailure = createAction(
+  ActionTypes.FETCH_LOCATIONS_FAILURE,
+  props<{ error: any }>()
+);
+
+export const resetLocations = createAction(
+  ActionTypes.RESET_LOCATIONS
+);
+
+export const fetchUnloadingLocations = createAction(
+  ActionTypes.FETCH_UNLOADING_LOCATIONS,
+  props<{ query: string, countryCode:string }>()
+);
+
+export const fetchUnloadingLocationsSuccess = createAction(
+  ActionTypes.FETCH_UNLOADING_LOCATIONS_SUCCESS,
+  props<{ locations: LocationResponse[] }>()
+);
+
+export const fetchUnloadingLocationsFailure = createAction(
+  ActionTypes.FETCH_UNLOADING_LOCATIONS_FAILURE,
+  props<{ error: any }>()
+);
+
+export const resetUnloadingLocations = createAction(
+  ActionTypes.RESET_UNLOADING_LOCATIONS
+);
+

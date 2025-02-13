@@ -35,6 +35,7 @@
     "kinde-angular": "^1.4.0",
     "ngx-cookie-service": "^19.0.0",
     "ngx-material-timepicker": "^13.1.1",
+    "ngx-skeleton-loader": "^10.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

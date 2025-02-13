@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OfferTableComponent} from './offer-table/offer-table.component';
 import {TelerouteAuthService} from '../../../../shared/services/teleroute/teleroute-auth.service';
 import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as appActions from '../../../../store/app/app.actions';
 
 @Component({
   selector: 'app-offer-page',
@@ -12,18 +14,14 @@ import {Subscription} from 'rxjs';
   styleUrl: './offer-page.component.scss',
 
 })
-export class OfferPageComponent implements OnInit, OnDestroy {
-  telerouteServiceSubscription$: Subscription;
+export class OfferPageComponent implements OnInit {
 
-  constructor(private telerouteAuthService: TelerouteAuthService) {
+  constructor(readonly store: Store) {
   }
 
-  ngOnDestroy(): void {
-    this.telerouteServiceSubscription$.unsubscribe();
-  }
 
   ngOnInit(): void {
-    this.telerouteServiceSubscription$ = this.telerouteAuthService.refreshToken().subscribe();
+    this.store.dispatch(appActions.fetchTelerouteRefreshToken());
   }
 
 }

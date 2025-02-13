@@ -4,10 +4,12 @@ import {MatDrawer, MatDrawerContainer, MatSidenavModule} from '@angular/material
 import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
 import {KindeAngularService} from 'kinde-angular';
 import {AsyncPipe} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {MatChip} from '@angular/material/chips';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatDrawerContainer, MatDrawer, MatSidenavModule, SidebarComponent, AsyncPipe],
+  imports: [RouterOutlet, MatDrawerContainer, MatDrawer, MatSidenavModule, SidebarComponent, AsyncPipe, MatIcon, MatChip],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

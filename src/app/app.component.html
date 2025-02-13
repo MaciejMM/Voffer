@@ -1,12 +1,21 @@
 <div class="mat-app-background">
   @if (kindeAuth.isAuthenticated$ | async) {
     <mat-drawer-container class="example-container h-[100vh]">
-        <mat-drawer class="h-full " mode="side" opened>
-          <app-sidebar></app-sidebar>
-        </mat-drawer>
+      <mat-drawer #drawer class="h-full " mode="side" opened>
+        <app-sidebar></app-sidebar>
+      </mat-drawer>
 
-      <mat-drawer-content class="h-full p-14 flex flex-col">
-        <router-outlet></router-outlet>
+      <mat-drawer-content class="">
+        <div class=" h-14 flex items-center pl-14">
+
+          <mat-chip (click)="drawer.toggle()" class="flex flex-row items-center gap-x-2 !cursor-pointer">
+            <mat-icon fontIcon="menu_open"></mat-icon>
+          </mat-chip>
+
+        </div>
+        <div class="h-full p-14 flex flex-col">
+          <router-outlet></router-outlet>
+        </div>
       </mat-drawer-content>
     </mat-drawer-container>
   }

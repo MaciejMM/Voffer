@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
@@ -12,14 +12,18 @@ import {AsyncPipe, NgClass, NgIf} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {Store} from '@ngrx/store';
 import {MatProgressSpinner, MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {VehicleOfferService} from '../../../offer/services/vehicle-offer-service';
 import {VehicleRequestMapperService} from '../../../offer/services/vehicle-request-mapper.service';
 import * as offerActions from '../../../../store/offer/offer.actions';
 import * as offerSelectors from '../../../../store/offer/offer.selectors';
-
+import * as appActions from '../../../../store/app/app.actions';
 import {VehicleOfferRequest} from '../../../offer/model/VehicleOfferRequest';
-import {TelerouteAuthService} from '../../../../shared/services/teleroute/teleroute-auth.service';
+import * as appSelectors from '../../../../store/app/app.selectors';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  TelerouteLoginDialogComponent
+} from '../../../../shared/components/teleroute-login-dialog/teleroute-login-dialog.component';
 
 @Component({
   selector: 'app-create-offer-tab',
@@ -40,13 +44,14 @@ import {TelerouteAuthService} from '../../../../shared/services/teleroute/telero
     MatIcon,
     MatProgressSpinner,
     MatProgressSpinnerModule,
-    AsyncPipe
+    AsyncPipe,
+    MatHint
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './create-offer-page.component.html',
   styleUrl: './create-offer-page.component.scss'
 })
-export class CreateOfferPageComponent implements OnInit, OnDestroy {
+export class CreateOfferPageComponent implements OnInit {
   isLoading$: Observable<boolean>;
   description: FormControl;
   weight: FormControl;
@@ -54,12 +59,13 @@ export class CreateOfferPageComponent implements OnInit, OnDestroy {
   volume: FormControl;
   truckLoad: FormControl;
   isFormValid: boolean = false;
-  telerouteServiceSubscription$: Subscription;
+  isTelerouteAuthenticated$: Observable<boolean>;
+  readonly dialog = inject(MatDialog);
 
   constructor(readonly formService: VehicleOfferService,
               readonly vehicleRequestMapper: VehicleRequestMapperService,
-              readonly store: Store,
-              readonly telerouteAuthService: TelerouteAuthService) {
+              readonly store: Store
+  ) {
     this.description = this.formService.getControl('description');
     this.weight = this.formService.getControl('weight');
     this.length = this.formService.getControl('length');
@@ -68,16 +74,13 @@ export class CreateOfferPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.telerouteServiceSubscription$ = this.telerouteAuthService.refreshToken().subscribe();
+    this.store.dispatch(appActions.fetchTelerouteRefreshToken());
+    this.isTelerouteAuthenticated$ = this.store.select(appSelectors.selectIsAuthenticatedToTeleroute);
     this.isLoading$ = this.store.select(offerSelectors.selectIsLoading);
     this.formService.formStatusChanges().subscribe({
       next: (status: any) => this.isFormValid = status === 'VALID',
       error: (error: any) => console.error('Error in form', error)
     });
-  }
-
-  ngOnDestroy(): void {
-    this.telerouteServiceSubscription$.unsubscribe();
   }
 
   submitOffer() {
@@ -87,4 +90,7 @@ export class CreateOfferPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(offerActions.createOffer({offer: mapToRequest}));
   }
 
+  openTelerouteLoginDialog() {
+    this.dialog.open(TelerouteLoginDialogComponent);
+  }
 }

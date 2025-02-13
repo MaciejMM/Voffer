@@ -3,19 +3,32 @@
   <div class="grid grid-cols-12 gap-x-4">
     <app-country-selector class="grid col-span-3" type="unloading"></app-country-selector>
     <mat-form-field class="grid col-span-9 ">
-      <mat-label>Kod pocztowy, miasto</mat-label>
-      <input (click)="getLocation()" [formControl]="searchUnloadingCity" matInput placeholder="Kod pocztowy, miasto"
-             [matAutocomplete]="auto">
+      @if (this.formService.getControl('unloadingPostalCode').value !== '') {
+        <mat-label>{{ this.formService.getControl('unloadingPostalCode').value }}</mat-label>
+      } @else {
+        <mat-label>Kod pocztowy, miasto</mat-label>
+      }
+      <input  [formControl]="this.formService.getControl('unloadingCity')" matInput
+              placeholder="Kod pocztowy, miasto"
+              [matAutocomplete]="auto">
+      @if(showUnloadingLocationLoader$ | async) {
+        <button matSuffix mat-icon-button disabled>
+          <mat-spinner diameter="24"></mat-spinner>
+        </button>
+      }
+      @if (this.formService.getControl('unloadingCity').value !== '') {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="clearLoadingFields()">
+          <mat-icon fontIcon="clear"></mat-icon>
+        </button>
+      }
       <mat-autocomplete #auto="matAutocomplete">
-        @for (option of locations$ | async; track option) {
+        @for (option of unloadingLocations$ | async; track option) {
           <mat-option class="pt-2" (click)="setValues(option)" value="{{option.city}}">
             <div class="pb-1">{{ option.city }} {{ option.postalCode }}</div>
             <div class="text-xs">({{ option.displayName }})</div>
-          </mat-option >
-
+          </mat-option>
         }
       </mat-autocomplete>
-
     </mat-form-field>
   </div>
   <div class="grid grid-cols-16 gap-x-4">

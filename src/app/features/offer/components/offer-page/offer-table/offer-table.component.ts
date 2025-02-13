@@ -22,7 +22,7 @@ import {DatePipe} from '@angular/common';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteOfferDialogComponent} from './delete-offer-dialog/delete-offer-dialog.component';
 import {MatIcon} from '@angular/material/icon';
@@ -31,6 +31,7 @@ import {Store} from '@ngrx/store';
 import * as offerActions from '../../../../../store/offer/offer.actions';
 import {DataService} from '../../../services/data.service';
 import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.service';
+
 @Component({
   selector: 'app-offer-table',
   imports: [
@@ -53,11 +54,11 @@ import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.servic
     MatSortModule,
     MatTableModule,
     MatMenu,
-    MatButton,
     MatMenuItem,
     MatMenuTrigger,
     MatIcon,
     MatTooltip,
+    MatIconButton,
   ],
   templateUrl: './offer-table.component.html',
   styleUrl: './offer-table.component.scss'

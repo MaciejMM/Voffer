@@ -17,6 +17,8 @@ import {DataService} from '../../../../offer/services/data.service';
     <mat-form-field>
       <mat-label>Kraj</mat-label>
       <mat-select (selectionChange)="resetCity()"  [formControl]="type=='loading' ? loadingCountryCode :  unloadingCountryCode ">
+        <mat-option value="">Kod kraju</mat-option>
+
         @for( country of getSortedCountries();track country.code){
           <mat-option  [value]="country.code">
             {{ country.code }}

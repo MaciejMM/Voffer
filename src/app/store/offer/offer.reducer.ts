@@ -2,6 +2,7 @@ import {createReducer, on} from '@ngrx/store';
 import {Offer} from '../../features/offer/model/Offer';
 import * as OfferActions from './offer.actions';
 import {ErrorResponse} from '../../shared/model/ErrorResponse';
+import {LocationResponse} from '../../features/offer/model/LocationResponse';
 
 export type State = {
   offerList: Offer[];
@@ -13,6 +14,10 @@ export type State = {
   isTelerouteTokenFetching: boolean;
   telerouteTokenError: ErrorResponse | null;
   showCloseButton: boolean;
+  showLocationLoader: boolean;
+  locationList: LocationResponse[];
+  showUnloadingLocationLoader: boolean;
+  unloadingLocationList: LocationResponse[];
 }
 
 export const initialState: State = {
@@ -24,7 +29,11 @@ export const initialState: State = {
   editingOfferId: 0,
   isTelerouteTokenFetching: false,
   telerouteTokenError: null,
-  showCloseButton: false
+  showCloseButton: false,
+  showLocationLoader: false,
+  locationList: [],
+  showUnloadingLocationLoader:false,
+  unloadingLocationList: []
 }
 
 export const offerReducer = createReducer(
@@ -98,5 +107,39 @@ export const offerReducer = createReducer(
   on(OfferActions.closeTelerouteLoginDialog, (state) => ({
     ...state,
     showCloseButton:false,
+  })),
+  on(OfferActions.fetchLoadingLocations, (state) => ({
+    ...state,
+    showLocationLoader: true,
+  })),
+  on(OfferActions.fetchLoadingLocationsSuccess, (state, payload) => ({
+    ...state,
+    showLocationLoader: false,
+    locationList: payload.locations
+  })),
+  on(OfferActions.fetchLoadingLocationsFailure, (state) => ({
+    ...state,
+    showLocationLoader: false,
+  })),
+  on(OfferActions.resetLocations, (state) => ({
+    ...state,
+    locationList: []
+  })),
+  on(OfferActions.fetchUnloadingLocations, (state) => ({
+    ...state,
+    showUnloadingLocationLoader: true,
+  })),
+  on(OfferActions.fetchUnloadingLocationsSuccess, (state, payload) => ({
+    ...state,
+    showUnloadingLocationLoader: false,
+    unloadingLocationList: payload.locations
+  })),
+  on(OfferActions.fetchUnloadingLocationsFailure, (state) => ({
+    ...state,
+    showUnloadingLocationLoader: false,
+  })),
+  on(OfferActions.resetUnloadingLocations, (state) => ({
+    ...state,
+    unloadingLocationList: []
   }))
 )
