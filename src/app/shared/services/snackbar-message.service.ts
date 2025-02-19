@@ -9,7 +9,6 @@ export class SnackbarMessageService {
   private _snackBar = inject(MatSnackBar);
   constructor() { }
 
-
   showSuccessMessage(message: string): void {
     this._snackBar.open(message, 'Close', {
       duration: 5000,

@@ -11,7 +11,7 @@ export class VehicleRequestMapperService {
   constructor() {
   }
 
-  public mapToRequest(form: any):VehicleOfferRequest {
+  public mapToRequest(form: any): VehicleOfferRequest {
     return {
       loadingPlace: this.mapLoadingPlace(form),
       unloadingPlace: this.mapUnloadingPlace(form),
@@ -26,24 +26,25 @@ export class VehicleRequestMapperService {
     }
   }
 
-  private mapLoadingPlace(form: any):LoadingPlace{
+  private mapLoadingPlace(form: any): LoadingPlace {
     return {
       country: form.value.loadingCountryCode,
       postalCode: form.value.loadingPostalCode ?? null,
       city: form.value.loadingCity,
-      loadingStartDateAndTime: mergeDateAndTime(String(form.value.loadingStartDate), String(form.value.loadingStartTime)),
-      loadingEndDateAndTime: mergeDateAndTime(String(form.value.loadingEndDate), String(form.value.loadingEndTime))
+      loadingStartDateAndTime: mergeDateAndTime(form.value.loadingStartDate, form.value.loadingStartTime),
+      loadingEndDateAndTime: mergeDateAndTime(form.value.loadingEndDate, form.value.loadingEndTime)
     }
   }
 
-  private mapUnloadingPlace(form: any):UnloadingPlace{
-    return {
+  private mapUnloadingPlace(form: any): UnloadingPlace[] {
+    const unloadingPlace: UnloadingPlace = {
       country: form.value.unloadingCountryCode,
       postalCode: form.value.unloadingPostalCode ?? null,
       city: form.value.unloadingCity,
-      unloadingStartDateAndTime: mergeDateAndTime((String(form.value.unloadingStartDate)), String(form.value.unloadingStartTime)),
-      unloadingEndDateAndTime: mergeDateAndTime(String(form.value.unloadingEndDate), String(form.value.unloadingEndTime))
+      unloadingStartDateAndTime: mergeDateAndTime(form.value.unloadingStartDate, form.value.unloadingStartTime),
+      unloadingEndDateAndTime: mergeDateAndTime(form.value.unloadingEndDate, form.value.unloadingEndTime)
     }
+    return [unloadingPlace];
   }
 
 }

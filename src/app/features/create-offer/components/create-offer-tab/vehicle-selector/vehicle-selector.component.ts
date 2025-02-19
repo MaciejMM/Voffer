@@ -30,7 +30,7 @@ export class VehicleSelectorComponent implements OnInit {
   constructor(
     private readonly formService: VehicleOfferService,
     private readonly dataService: DataService,
-    ) {
+  ) {
 
   }
 
@@ -39,12 +39,15 @@ export class VehicleSelectorComponent implements OnInit {
     this.vehicleTypeList = this.dataService.vehicleTypeList;
     this.goodsTypeControl = this.formService.getControl('goodsType');
     this.vehicleTypeControl = this.formService.getControl('vehicleType');
-    this.goodsTypeControl.valueChanges.subscribe((value: string) => {
-      this.filterVehicleTypes(value);
-    });
+    if(this.goodsTypeControl.value) {
+      this.filteredList = this.vehicleTypeList.filter(vehicle => vehicle.typeOfGoods === this.goodsTypeControl.value);
+    }
   }
 
-  filterVehicleTypes(selectedGoodsType: string) {
-    this.filteredList = this.vehicleTypeList.filter(vehicle => vehicle.typeOfGoods === selectedGoodsType);
+  onSelectedVehicleType(vehicleType: string) {
+    this.vehicleTypeControl.setValue(vehicleType);
+    this.filteredList = this.vehicleTypeList.filter(vehicle => vehicle.typeOfGoods === vehicleType);
+
   }
+
 }

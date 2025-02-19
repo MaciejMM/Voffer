@@ -53,11 +53,11 @@ describe('VehicleRequestMapperService', () => {
     expect(request.loadingPlace.loadingStartDateAndTime.toDateString()).toEqual(new Date('2021-08-01T10:00:00.000Z').toDateString());
     expect(request.loadingPlace.loadingEndDateAndTime.toDateString()).toEqual(new Date('2021-08-01T14:00:00.000Z').toDateString());
 
-    expect(request.unloadingPlace.country).toBe('DE');
-    expect(request.unloadingPlace.postalCode).toBe('00-000');
-    expect(request.unloadingPlace.city).toBe('Berlin');
-    expect(request.unloadingPlace.unloadingStartDateAndTime.toDateString()).toEqual(new Date('2021-08-02T12:00:00.000Z').toDateString());
-    expect(request.unloadingPlace.unloadingEndDateAndTime.toDateString()).toEqual(new Date('2021-08-02T14:00:00.000Z').toDateString());
+    expect(request.unloadingPlace[0].country).toBe('DE');
+    expect(request.unloadingPlace[0].postalCode).toBe('00-000');
+    expect(request.unloadingPlace[0].city).toBe('Berlin');
+    expect(request.unloadingPlace[0].unloadingStartDateAndTime.toDateString()).toEqual(new Date('2021-08-02T12:00:00.000Z').toDateString());
+    expect(request.unloadingPlace[0].unloadingEndDateAndTime.toDateString()).toEqual(new Date('2021-08-02T14:00:00.000Z').toDateString());
 
     expect(request.description).toBe('description');
     expect(request.loadingType).toBe('FTL');
@@ -105,11 +105,11 @@ describe('VehicleRequestMapperService', () => {
       expect(request.loadingPlace.city).toBe('Pocz');
       expect(request.loadingPlace.loadingStartDateAndTime.toDateString()).toEqual(new Date('2025-01-06T03:30:00.000Z').toDateString());
       expect(request.loadingPlace.loadingEndDateAndTime.toDateString()).toEqual(new Date('2025-01-06T05:00:00.000Z').toDateString());
-      expect(request.unloadingPlace.country).toBe('PL');
-      expect(request.unloadingPlace.postalCode).toBe('55-231');
-      expect(request.unloadingPlace.city).toBe('Jelcz');
-      expect(request.unloadingPlace.unloadingStartDateAndTime.toDateString()).toEqual(new Date('2025-01-20T00:00:00.000Z').toDateString());
-      expect(request.unloadingPlace.unloadingEndDateAndTime.toDateString()).toEqual(new Date('2025-01-20T01:00:00.000Z').toDateString());
+      expect(request.unloadingPlace[0].country).toBe('PL');
+      expect(request.unloadingPlace[0].postalCode).toBe('55-231');
+      expect(request.unloadingPlace[0].city).toBe('Jelcz');
+      expect(request.unloadingPlace[0].unloadingStartDateAndTime.toDateString()).toEqual(new Date('2025-01-20T00:00:00.000Z').toDateString());
+      expect(request.unloadingPlace[0].unloadingEndDateAndTime.toDateString()).toEqual(new Date('2025-01-20T01:00:00.000Z').toDateString());
 
       expect(request.description).toBe('qedcsds');
       expect(request.loadingType).toBe('FTL');

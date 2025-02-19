@@ -31,6 +31,8 @@ import {Store} from '@ngrx/store';
 import * as offerActions from '../../../../../store/offer/offer.actions';
 import {DataService} from '../../../services/data.service';
 import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.service';
+import {Router} from '@angular/router';
+import {EditOfferService} from '../../../../create-offer/services/edit-offer.service';
 
 @Component({
   selector: 'app-offer-table',
@@ -64,7 +66,7 @@ import {FlatOfferMapperService} from '../../../services/flat-offer-mapper.servic
   styleUrl: './offer-table.component.scss'
 })
 export class OfferTableComponent implements OnDestroy, OnInit {
-  displayedColumns: string[] = ['loadingDateAndTime', 'loadingCity', 'unloadingDateAndTime', 'unloadingCity', 'goodsType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
+  displayedColumns: string[] = ['loadingStartDateAndTime', 'loadingCity', 'unloadingStartDateAndTime', 'unloadingCity', 'goodsType', 'loadingType', "loadingWeight", "loadingLength", "loadingVolume", "status", "actions"];
   dataSource: MatTableDataSource<OfferFlat> = new MatTableDataSource();
   readonly dialog = inject(MatDialog);
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
@@ -75,7 +77,9 @@ export class OfferTableComponent implements OnDestroy, OnInit {
   constructor(
     readonly store: Store,
     readonly dataService: DataService,
-    readonly flatOfferMapper: FlatOfferMapperService
+    readonly flatOfferMapper: FlatOfferMapperService,
+    readonly router: Router,
+    readonly editOfferService: EditOfferService,
   ) {
   }
 
@@ -93,15 +97,19 @@ export class OfferTableComponent implements OnDestroy, OnInit {
 
   }
 
-  applyFilter(event: Event) {
-    this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    applyFilter(event: Event) {
+      this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
   }
 
   ngOnDestroy() {
     this.OfferTableSubscription$.unsubscribe();
+  }
+
+  updateOffer(id: number) {
+    this.store.dispatch(offerActions.updateOffer({offerId: id}));
   }
 
   deleteOffer(id: number) {
@@ -113,4 +121,10 @@ export class OfferTableComponent implements OnDestroy, OnInit {
     return `fi fi-${country.toLowerCase()}`;
   }
 
+  editOffer(id: number) {
+    this.store.dispatch(offerActions.setEditingOfferId({id: id}));
+    this.router.navigate(['/edit', id]);
+    this.editOfferService.editOffer(id);
+
+  }
 }

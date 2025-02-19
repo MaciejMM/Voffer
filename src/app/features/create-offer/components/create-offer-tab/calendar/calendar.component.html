@@ -1,8 +1,9 @@
 <mat-form-field class="!w-full">
   <mat-label>Przedział dni</mat-label>
-  <mat-date-range-input [rangePicker]="picker">
-    <input [min]="minDate"  [formControl]="type=='loading' ? loadingStartDate :  unloadingStartDate " matStartDate placeholder="Start date">
-    <input [min]="minDate"  [formControl]="type==='loading' ? loadingEndDate : unloadingEndDate" matEndDate placeholder="End date">
+  <mat-date-range-input [rangePicker]="picker" [min]="minDate" >
+    <input
+           [formControl]="type=='loading' ? loadingStartDate :  unloadingStartDate " matStartDate placeholder="Start date">
+    <input [formControl]="type==='loading' ? loadingEndDate : unloadingEndDate" matEndDate placeholder="End date">
   </mat-date-range-input>
   <mat-hint>DD.MM.YYYY – DD.MM.YYYY</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

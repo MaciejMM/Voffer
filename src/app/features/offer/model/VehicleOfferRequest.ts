@@ -1,6 +1,6 @@
 export type VehicleOfferRequest = {
   loadingPlace: LoadingPlace;
-  unloadingPlace: UnloadingPlace;
+  unloadingPlace: UnloadingPlace[];
   description: string | null;
   loadingType: string | null;
   loadingWeight: number | null;

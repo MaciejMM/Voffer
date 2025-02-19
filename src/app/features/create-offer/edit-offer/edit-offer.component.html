@@ -1,0 +1,90 @@
+<div class="text-2xl pb-12">Edytuj ofertę</div>
+
+<form class="  pt-8" [formGroup]="formService.form">
+  <div class="grid grid-cols-2 gap-x-4">
+    <app-loading-section [ngClass]="'col-span-1'"></app-loading-section>
+    <app-unloading-section [ngClass]="'col-span-1'"></app-unloading-section>
+  </div>
+  <div *ngIf="formService.form.errors?.['unloadingBeforeLoading']"
+       class="text-engineering-orange flex flex-row items-center mt-2">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+    Czas rozładunku nie może być przed czasem załadunku.
+  </div>
+  <div *ngIf="formService.form.errors?.['loadingStartAfterEnd']" class="text-engineering-orange mt-2">
+    Czas załadunku nie może być przed czasem rozładunku.
+  </div>
+  <div *ngIf="formService.form.errors?.['unloadingStartAfterEnd']" class="text-engineering-orange mt-2">
+    Czas rozładunku nie może być przed czasem rozładunku.
+  </div>
+  <div class="w-full py-8">
+    <mat-radio-group aria-label="Select an option" [formControl]="truckLoad">
+      <mat-radio-button [checked]="true" value="FTL">FTL</mat-radio-button>
+      <mat-radio-button value="LTL">LTL</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="grid grid-cols-12 grid-rows-2 gap-4">
+    <mat-form-field class="col-span-2 row-span-1">
+      <mat-label>Waga (tony)</mat-label>
+      <input [formControl]="weight" matInput min="1" max="999" type="number" placeholder="max 999">
+      <mat-hint> Min 1 / Max 999 </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class=" col-span-2 row-span-1">
+      <mat-label>Długość (metry)</mat-label>
+      <input [formControl]="length" matInput min="1" max="25" type="number" placeholder="max 25">
+      <mat-hint> Min 1 / Max 25 </mat-hint>
+
+    </mat-form-field>
+
+    <mat-form-field class="col-span-2 row-span-1">
+      <mat-label>Wolumen</mat-label>
+      <input [formControl]="volume" matInput min="1" max="999" type="number" value="" placeholder="max 999">
+      <mat-hint> Min 1 / Max 999 </mat-hint>
+
+    </mat-form-field>
+
+    <mat-form-field class="col-span-6 row-span-2">
+      <mat-label>Opis</mat-label>
+      <textarea [formControl]="description" class="textarea1" matInput placeholder="Opis..."></textarea>
+    </mat-form-field>
+    <app-vehicle-selector class="col-span-6"></app-vehicle-selector>
+
+  </div>
+  <div class="flex flex-row gap-x-4">
+
+    @if (this.isLoading$ | async) {
+      <button
+        disabled
+        mat-flat-button
+        class="w-64  justify-center items-center"
+      >
+        <mat-spinner [diameter]="24" class="flex"></mat-spinner>
+
+      </button>
+    } @else {
+      <button
+        [disabled]="!isFormValid"
+        (click)="submitEditOffer()"
+        mat-flat-button
+        class="w-64  justify-center items-center"
+      >
+        <span class="flex">Edytuj ofertę</span>
+      </button>
+    }
+
+
+    @if(!(this.isTelerouteAuthenticated$ | async)){
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="openTelerouteLoginDialog()"
+        class="w-64  justify-center items-center"
+      >
+        Zaloguj się do Teleroute
+      </button>
+    }
+
+  </div>
+</form>
+

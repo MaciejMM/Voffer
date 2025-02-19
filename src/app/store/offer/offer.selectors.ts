@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {State} from './offer.reducer';
+import {Offer} from '../../features/offer/model/Offer';
 
 export const selectOfferState = createFeatureSelector<State>('offer');
 export const selectOfferList = createSelector(selectOfferState, (state: State) => state.offerList);
@@ -32,3 +33,15 @@ export const selectIsUnloadingLocationFetching = createSelector(
   selectOfferState,
   (state) => state.showLocationLoader
 );
+
+export const showUnloadingLocationLoader = createSelector(
+  selectOfferState,
+  (state) => state.showUnloadingLocationLoader
+);
+
+export const selectOfferById =  (id: number) => createSelector(
+  selectOfferList,
+  (offers) => offers.find((offer:Offer) => offer.id === id)
+);
+
+export const selectEditOffer = createSelector(selectOfferState,   (state) => state.editOffer);

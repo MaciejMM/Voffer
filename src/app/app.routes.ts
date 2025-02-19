@@ -8,7 +8,7 @@ export const routes: Route[] = [
     loadChildren: () => import('./features/offer/routes').then((module) => module.OFFER_ROUTES),
   },
   {
-    path: 'create',
+    path: '',
     loadChildren: () => import('./features/create-offer/routes').then((module) => module.CREATE_OFFER_ROUTES),
   },
   {

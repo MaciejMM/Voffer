@@ -19,7 +19,6 @@ export class AdminEffects {
     private userService: UserService,
     private readonly store: Store<AdminState.State>,
     private readonly snackbarMessageService: SnackbarMessageService,
-
   ) {
   }
 
@@ -83,7 +82,7 @@ export class AdminEffects {
       switchMap((action) =>
         this.userService.deleteUser(action.id).pipe(
           map(() => {
-            this.snackbarMessageService.showSuccessMessage('User deleted successfully ');
+            this.snackbarMessageService.showSuccessMessage('User deleted successfully');
             return adminActions.deleteUserSuccess({id: action.id});
           }),
           catchError((error: any) => {

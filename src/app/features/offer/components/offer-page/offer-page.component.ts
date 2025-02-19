@@ -1,7 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OfferTableComponent} from './offer-table/offer-table.component';
-import {TelerouteAuthService} from '../../../../shared/services/teleroute/teleroute-auth.service';
-import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as appActions from '../../../../store/app/app.actions';
 

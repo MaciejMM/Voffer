@@ -41,7 +41,7 @@ export class TimePickerComponent implements OnInit {
 
   ngOnInit() {
     this.timeControl = this.formService.getControl(this.time);
-    this._adapter.setLocale('pl-PL');
+    this._adapter.setLocale('en-GB');
   }
 
 }

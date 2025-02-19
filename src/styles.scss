@@ -32,11 +32,17 @@ html {
 mat-mdc-row {
   height: 52px
 }
+
 $defaultBlack: #0f0f0f;
 $defaultWhite: #ffffff;
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
+  mdc-button__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $defaultBlack !important;
+  }
   @include mat.button-overrides((
     filled-container-color: $defaultBlack,
     filled-label-text-color: $defaultWhite,
@@ -46,7 +52,6 @@ $defaultWhite: #ffffff;
     disabled-unselected-icon-color: $defaultWhite,
     selected-icon-color: $defaultBlack,
     unselected-icon-color: $defaultBlack,
-
   ));
   //menu
   @include mat.menu-overrides((
@@ -66,4 +71,9 @@ $defaultWhite: #ffffff;
   ));
 
 }
+.default-btn{
+  color: #0f0f0f !important;
+}
+
+
 

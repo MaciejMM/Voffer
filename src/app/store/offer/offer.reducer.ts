@@ -3,8 +3,10 @@ import {Offer} from '../../features/offer/model/Offer';
 import * as OfferActions from './offer.actions';
 import {ErrorResponse} from '../../shared/model/ErrorResponse';
 import {LocationResponse} from '../../features/offer/model/LocationResponse';
+import {VehicleOfferRequest} from '../../features/offer/model/VehicleOfferRequest';
 
 export type State = {
+  editOffer: VehicleOfferRequest | null;
   offerList: Offer[];
   displayError: boolean;
   displaySuccess: boolean;
@@ -21,6 +23,7 @@ export type State = {
 }
 
 export const initialState: State = {
+  editOffer: null,
   offerList: [],
   displayError: false,
   displaySuccess: false,
@@ -32,7 +35,7 @@ export const initialState: State = {
   showCloseButton: false,
   showLocationLoader: false,
   locationList: [],
-  showUnloadingLocationLoader:false,
+  showUnloadingLocationLoader: false,
   unloadingLocationList: []
 }
 
@@ -99,14 +102,14 @@ export const offerReducer = createReducer(
     isTelerouteTokenFetching: false,
     showCloseButton: true
   })),
-  on(OfferActions.fetchTelerouteTokenFailure, (state,payload) => ({
+  on(OfferActions.fetchTelerouteTokenFailure, (state, payload) => ({
     ...state,
     isTelerouteTokenFetching: false,
     telerouteTokenError: payload.error
   })),
   on(OfferActions.closeTelerouteLoginDialog, (state) => ({
     ...state,
-    showCloseButton:false,
+    showCloseButton: false,
   })),
   on(OfferActions.fetchLoadingLocations, (state) => ({
     ...state,
@@ -141,5 +144,45 @@ export const offerReducer = createReducer(
   on(OfferActions.resetUnloadingLocations, (state) => ({
     ...state,
     unloadingLocationList: []
+  })),
+  on(OfferActions.updateOffer, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+  on(OfferActions.updateOfferSuccess, (state, payload) => ({
+    ...state,
+    isLoading: false,
+    displaySuccess: true,
+    offerList: state.offerList.filter(offer => offer.id !== payload.oldOfferId).concat(payload.offer)
+  })),
+  on(OfferActions.updateOfferFailure, (state, payload) => ({
+    ...state,
+    isLoading: false,
+    displayError: true,
+    error: payload.error
+  })),
+  on(OfferActions.setOffer, (state, payload) => ({
+    ...state,
+    editOffer: payload.offerRequest
+  })),
+  on(OfferActions.clearOffer, (state) => ({
+    ...state,
+    editOffer: null
+  })),
+  on(OfferActions.editOffer, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+  on(OfferActions.editOfferSuccess, (state, payload) => ({
+    ...state,
+    isLoading: false,
+    displaySuccess: true,
+    offerList: state.offerList.map(offer => offer.id === payload.offer.id ? payload.offer : offer)
+  })),
+  on(OfferActions.editOfferFailure, (state, payload) => ({
+    ...state,
+    isLoading: false,
+    displayError: true,
+    error: payload.error
   }))
-)
+);

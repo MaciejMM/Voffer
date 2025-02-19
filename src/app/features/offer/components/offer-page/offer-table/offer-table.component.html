@@ -5,13 +5,14 @@
 
 <div class="mat-elevation-z8 overflow-y-scroll h-[60vh]">
   <table mat-table [dataSource]="dataSource" matSort >
-    <ng-container matColumnDef="loadingDateAndTime">
+    <ng-container matColumnDef="loadingStartDateAndTime">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
       <td mat-cell *matCellDef="let element">
         <div class="text-xs">
-          <div>{{ element.loadingDateAndTime | date:'yyy-MM-dd' }}</div>
+          <div>{{ element.loadingStartDateAndTime | date:'yyy-MM-dd' }} - {{ element.loadingStartDateAndTime | date:'HH:mm' }}</div>
           <div>
-            {{ element.loadingDateAndTime | date:'hh:mm' }}
+            {{ element.loadingEndDateAndTime | date:'yyy-MM-dd' }} - {{ element.loadingEndDateAndTime | date:'HH:mm' }}
+
           </div>
         </div>
       </td>
@@ -29,13 +30,13 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="unloadingDateAndTime">
+    <ng-container matColumnDef="unloadingStartDateAndTime">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Data</th>
       <td mat-cell *matCellDef="let element">
         <div class="text-xs">
-          <div>{{ element.unloadingDateAndTime | date:'yyy-MM-dd' }} </div>
+          <div>{{ element.unloadingStartDateAndTime | date:'yyy-MM-dd' }} - {{ element.unloadingStartDateAndTime | date:'HH:mm' }}  </div>
           <div>
-            {{ element.unloadingDateAndTime | date:'hh:mm' }}
+            {{ element.unloadingEndDateAndTime | date:'yyy-MM-dd' }} - {{ element.unloadingEndDateAndTime | date:'HH:mm' }}
           </div>
         </div>
       </td>
@@ -107,7 +108,8 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Odswież ofertę</button>
+          <button mat-menu-item (click)="editOffer(element.id)">Edytuj ofertę</button>
+          <button mat-menu-item (click)="updateOffer(element.id)">Odswież ofertę</button>
           <button mat-menu-item (click)="deleteOffer(element.id)">Usuń ofertę</button>
         </mat-menu>
       </td>

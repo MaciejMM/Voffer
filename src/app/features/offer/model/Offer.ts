@@ -11,15 +11,17 @@ export type Offer = {
     loadingCountry: string;
     loadingCity: string;
     loadingPostalCode: string | null;
-    loadingDateAndTime: string;
+    loadingStartDateAndTime: string;
+    loadingEndDateAndTime: string;
   };
-  unloadingPlace: {
+  unloadingPlace: Array<{
     unloadingId: number;
     unloadingCountry: string;
     unloadingCity: string;
     unloadingPostalCode: string | null;
-    unloadingDateAndTime: string;
-  };
+    unloadingStartDateAndTime: string;
+    unloadingEndDateAndTime: string;
+  }>;
   description: string;
   loadingType: string;
   loadingWeight: string;
@@ -39,11 +41,13 @@ export type OfferFlat = {
   loadingCountry: string;
   loadingCity: string;
   loadingPostalCode: string | null;
-  loadingDateAndTime: string;
+  loadingStartDateAndTime: string;
+  loadingEndDateAndTime: string;
   unloadingCountry: string;
   unloadingCity: string;
   unloadingPostalCode: string | null;
-  unloadingDateAndTime: string;
+  unloadingStartDateAndTime: string;
+  unloadingEndDateAndTime: string;
   description: string;
   loadingType: string;
   loadingWeight: string;

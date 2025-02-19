@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {distinctUntilChanged, filter, Observable} from 'rxjs';
 import {LocationResponse} from '../../../../offer/model/LocationResponse';
 import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
-import {LocationSearchService} from '../../../../offer/services/location-search.service';
 import {CountrySelectorComponent} from '../country-selector/country-selector.component';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {TimePickerComponent} from '../time-picker/time-picker.component';
@@ -39,7 +38,6 @@ import * as offerSelectors from '../../../../../store/offer/offer.selectors';
     MatSuffix,
   ],
   templateUrl: './unloading-section.component.html',
-  styleUrl: './unloading-section.component.scss'
 })
 export class UnloadingSectionComponent {
   unloadingLocations$: Observable<LocationResponse[]>;
@@ -58,7 +56,7 @@ export class UnloadingSectionComponent {
         this.store.dispatch(offerActions.fetchUnloadingLocations({query: value, countryCode: countryCode}));
       });
     this.unloadingLocations$ = this.store.select(offerSelectors.selectUnloadingLocations);
-    this.showUnloadingLocationLoader$ = this.store.select(offerSelectors.selectIsUnloadingLocationFetching);
+    this.showUnloadingLocationLoader$ = this.store.select(offerSelectors.showUnloadingLocationLoader);
 
   }
 

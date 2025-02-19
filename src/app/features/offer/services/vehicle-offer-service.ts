@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {dateAndTimeValidator} from './validators/dateAndTimeValidator';
-import {mergeDateAndTime} from './validators/TimeUtil';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
@@ -37,18 +36,18 @@ export class VehicleOfferService {
   form: any = new FormGroup({
     vehicleType: new FormControl('', [Validators.required]),
     goodsType: new FormControl('', Validators.required),
-    loadingStartDate: new FormControl(this.mapDefaultValue('2025-01-28T10:00:00.000Z'), [Validators.required, Validators.min(new Date().getDate())]),
-    loadingEndDate: new FormControl(this.mapDefaultValue(`2025-01-28T14:00:00.000Z`), Validators.required),
-    loadingStartTime: new FormControl(this.mapDefaultValue("2025-01-28T10:00:00.000Z"), Validators.required),
-    loadingEndTime: new FormControl(this.mapDefaultValue("2025-01-28T12:30:00.000Z"), Validators.required),
+    loadingStartDate: new FormControl(new Date(), [Validators.required, Validators.min(new Date().getDate())]),
+    loadingEndDate: new FormControl(new Date(), Validators.required),
+    loadingStartTime: new FormControl(this.mapDefaultTime(10, 0), Validators.required),
+    loadingEndTime: new FormControl(this.mapDefaultTime(12, 30), Validators.required),
     loadingCountryCode: new FormControl(this.mapDefaultValue('PL'), Validators.required),
     loadingCity: new FormControl(this.mapDefaultValue('Poznan'), Validators.required),
     loadingPostalCode: new FormControl(this.mapDefaultValue('61-000')),
 
-    unloadingStartDate: new FormControl(this.mapDefaultValue("2025-01-30T23:00:00.000Z"), Validators.required),
-    unloadingEndDate: new FormControl(this.mapDefaultValue("2025-01-30T23:00:00.000Z"), Validators.required),
-    unloadingStartTime: new FormControl(this.mapDefaultValue("2025-01-30T12:00:00.000Z"), Validators.required),
-    unloadingEndTime: new FormControl(this.mapDefaultValue("2025-01-30T14:30:00.000Z"), Validators.required),
+    unloadingStartDate: new FormControl(new Date(), Validators.required),
+    unloadingEndDate: new FormControl(new Date(), Validators.required),
+    unloadingStartTime: new FormControl(this.mapDefaultTime(12, 30), Validators.required),
+    unloadingEndTime: new FormControl(this.mapDefaultTime(14, 30), Validators.required),
     unloadingCountryCode: new FormControl(this.mapDefaultValue('PL'), Validators.required),
     unloadingCity: new FormControl(this.mapDefaultValue('Koscian'), Validators.required),
     unloadingPostalCode: new FormControl(this.mapDefaultValue('64-000')),
@@ -58,13 +57,24 @@ export class VehicleOfferService {
     weight: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(999)]),
     length: new FormControl(1, [Validators.required, Validators.min(1)]),
     volume: new FormControl(1, [Validators.required, Validators.min(1)]),
-  }, {validators: dateAndTimeValidator(mergeDateAndTime)});
+  }, {validators: dateAndTimeValidator()});
 
   constructor() {
   }
 
-  mapDefaultValue(value: string | null) {
+  mapDefaultValue(value: string) {
     return environment.name === 'local' ? `${value}` : "";
+  }
+
+  mapDefaultTime(hour: number, minutes: number) {
+    let value = new Date();
+    const newDate = value.getDate() + 1;
+    let newDateValue = new Date(new Date().setDate(newDate));
+    newDateValue.setHours(hour);
+    newDateValue.setMinutes(minutes);
+    newDateValue.setSeconds(0);
+    newDateValue.setMilliseconds(0);
+    return environment.name === 'local' ? `${newDateValue.toISOString()}` : "";
   }
 
   getControl(controlName: string): FormControl {
@@ -94,5 +104,8 @@ export class VehicleOfferService {
   resetAndEnableForm() {
     // this.form.reset();
     this.form.enable();
+  }
+  markAllAsTouched() {
+    this.form.markAllAsTouched();
   }
 }

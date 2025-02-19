@@ -1,6 +1,6 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-export function dateAndTimeValidator(mergeDateAndTime:any): ValidatorFn {
+export function dateAndTimeValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const loadingStartDate = control.get('loadingStartDate')?.value;
     const loadingEndDate = control.get('loadingEndDate')?.value;
@@ -15,10 +15,10 @@ export function dateAndTimeValidator(mergeDateAndTime:any): ValidatorFn {
       !unloadingStartDate || !unloadingEndDate || !unloadingStartTime || !unloadingEndTime) {
       return null;
     }
-    const loadingStart = mergeDateAndTime(loadingStartDate, loadingStartTime)
-    const loadingEnd = mergeDateAndTime(loadingEndDate, loadingEndTime)
-    const unloadingStart = mergeDateAndTime(unloadingStartDate, unloadingStartTime)
-    const unloadingEnd = mergeDateAndTime(unloadingEndDate, unloadingEndTime)
+    const loadingStart: Date = mergeDateAndTime(loadingStartDate, loadingStartTime)
+    const loadingEnd: Date = mergeDateAndTime(loadingEndDate, loadingEndTime)
+    const unloadingStart: Date = mergeDateAndTime(unloadingStartDate, unloadingStartTime)
+    const unloadingEnd: Date = mergeDateAndTime(unloadingEndDate, unloadingEndTime)
 
 
     const errors: ValidationErrors = {};
@@ -38,6 +38,13 @@ export function dateAndTimeValidator(mergeDateAndTime:any): ValidatorFn {
     return Object.keys(errors).length ? errors : null;
   };
 
-
 }
 
+const mergeDateAndTime = (date: string, time: string): Date => {
+  const formatedDate = new Date(date);
+  const formatedTime = new Date(time);
+  formatedDate.setHours(formatedTime.getHours());
+  formatedDate.setMinutes(formatedTime.getMinutes());
+  formatedDate.setSeconds(0);
+  return formatedDate;
+}
