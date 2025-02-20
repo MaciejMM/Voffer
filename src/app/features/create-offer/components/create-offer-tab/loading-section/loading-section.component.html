@@ -1,9 +1,9 @@
 <div class="loading">
   <div class="text-2xl pb-4">Załadunek</div>
-  <div class="">
-    <div class="grid grid-cols-12 gap-x-4">
-      <app-country-selector class="grid col-span-3" type="loading"></app-country-selector>
-      <mat-form-field class="grid col-span-9 ">
+  <div>
+    <div class="grid grid-cols-6 xl:grid-cols-12 gap-x-4">
+      <app-country-selector class="grid col-span-2 xl:col-span-3" type="loading"></app-country-selector>
+      <mat-form-field class="grid col-span-4 xl:col-span-9 ">
         @if (this.formService.getControl('loadingPostalCode').value !== '') {
           <mat-label>{{ this.formService.getControl('loadingPostalCode').value }}</mat-label>
         } @else {
@@ -32,10 +32,10 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="grid grid-cols-16 gap-x-4">
-      <app-calendar class="grid col-start-1 col-end-6" type="loading"></app-calendar>
-      <app-time-picker class="grid col-start-6 col-end-12" time="loadingStartTime"></app-time-picker>
-      <app-time-picker class="grid col-start-12 col-end-17" time="loadingEndTime"></app-time-picker>
+    <div class="grid grid-cols-2 xl:grid-cols-12 gap-x-4">
+      <app-calendar class="grid col-span-2 xl:col-span-6" type="loading"></app-calendar>
+      <app-time-picker class="grid col-span-1 xl:col-span-3" time="loadingStartTime"></app-time-picker>
+      <app-time-picker class="grid col-span-1 xl:col-span-3" time="loadingEndTime"></app-time-picker>
     </div>
   </div>
 </div>

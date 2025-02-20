@@ -4,19 +4,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor:{
-        'midnight-green':'#004f4fff',
-        'platinum':'#e0e3e2ff',
-        'night':'#101414ff',
-        'asparagus':'#698f3fff',
-        'engineering-orange':'#c20114ff'
+        'default-white':"#FAF9FD"
       },
-      textColor:{
-        'midnight-green':'#004f4fff',
-        'platinum':'#e0e3e2ff',
-        'night':'#101414ff',
-        'asparagus':'#698f3fff',
-        'engineering-orange':'#c20114ff'
-      }
+
     },
   },
   plugins: [],

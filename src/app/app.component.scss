@@ -1,3 +1,7 @@
 textarea.mat-input-element {
   resize: none !important;
 }
+
+.default-view-height {
+  height: calc(100vh - 3.5rem);
+}
