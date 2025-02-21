@@ -26,7 +26,7 @@ export class OfferPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.route.snapshot.queryParamMap.get('code') !== undefined) {
+    if (this.route.snapshot.queryParamMap.has('code')) {
       this.store.dispatch(appActions.setTranseuCode({code: this.route.snapshot.queryParamMap.get('code')!}));
       this.dialog.open(TranseuLoginDialogComponent);
     }

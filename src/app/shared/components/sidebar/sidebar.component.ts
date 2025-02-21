@@ -52,7 +52,7 @@ export class SidebarComponent implements OnInit {
   }
 
   redirectToTranseuPage() {
-    window.location.href = `https://auth.platform.trans.eu/oauth2/auth?client_id=${environment.transEuClientId}&response_type=code&state=random_number&redirect_uri=https://voffer-d18ce4ed1b53.herokuapp.com/`;
+    window.location.href = `https://auth.platform.trans.eu/oauth2/auth?client_id=${environment.transEuClientId}&response_type=code&state=random_number&redirect_uri=https://voffer-d18ce4ed1b53.herokuapp.com`;
   }
 
 }
