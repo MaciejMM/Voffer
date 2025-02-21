@@ -1,8 +1,10 @@
 import {Route} from '@angular/router';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
+import {MainPageComponent} from './features/main-page/main-page.component';
+import {canActivateAuthGuard} from 'kinde-angular';
 
 export const routes: Route[] = [
-  {path: '', redirectTo: 'vehicle-offer', pathMatch: 'full'},
+  {path: '', component:MainPageComponent,canActivate: [canActivateAuthGuard]},
   {
     path: 'vehicle-offer',
     loadChildren: () => import('./features/offer/routes').then((module) => module.OFFER_ROUTES),
