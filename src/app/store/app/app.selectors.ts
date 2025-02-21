@@ -8,3 +8,4 @@ export const selectIsLoading = createSelector(selectAppState, (state: State) => 
 export const selectIsAuthenticatedToTeleroute = createSelector(selectAppState, (state: State) => state.isTelerouteAuthenticated);
 export const selectIsLoadingToTeleroute = createSelector(selectAppState, (state: State) => state.isLoading);
 
+export const selectTranseuCode = createSelector(selectAppState, (state: State) => state.transeuCode);

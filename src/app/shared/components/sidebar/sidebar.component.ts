@@ -11,7 +11,7 @@ import {Store} from '@ngrx/store';
 import * as appSelectors from '../../../store/app/app.selectors';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
-import {NgxSkeletonLoaderComponent} from 'ngx-skeleton-loader';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,24 +29,30 @@ import {NgxSkeletonLoaderComponent} from 'ngx-skeleton-loader';
 export class SidebarComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   isTelerouteAuthenticated$: Observable<boolean>;
+
   constructor(private kindeAuthService: KindeAngularService, private route: Router,
               readonly store: Store
-              ) {
+  ) {
   }
 
   ngOnInit(): void {
-        this.isTelerouteAuthenticated$ = this.store.select(appSelectors.selectIsAuthenticatedToTeleroute);
-    }
+    this.isTelerouteAuthenticated$ = this.store.select(appSelectors.selectIsAuthenticatedToTeleroute);
+  }
 
   logout() {
     this.kindeAuthService.logout();
   }
+
   navigatePage(page: string) {
     this.route.navigate([`/${page}`]);
   }
 
   openTelerouteLoginDialog() {
     this.dialog.open(TelerouteLoginDialogComponent);
+  }
+
+  redirectToTranseuPage() {
+    window.location.href = `https://auth.platform.trans.eu/oauth2/auth?client_id=${environment.transEuClientId}&response_type=code&state=random_number&redirect_uri=https://voffer-d18ce4ed1b53.herokuapp.com/`;
   }
 
 }

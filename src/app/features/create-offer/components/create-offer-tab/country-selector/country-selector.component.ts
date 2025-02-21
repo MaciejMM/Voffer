@@ -4,6 +4,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {VehicleOfferService} from '../../../../offer/services/vehicle-offer-service';
 import {DataService} from '../../../../offer/services/data.service';
+
 @Component({
   selector: 'app-country-selector',
   imports: [
@@ -16,11 +17,12 @@ import {DataService} from '../../../../offer/services/data.service';
   template: `
     <mat-form-field>
       <mat-label>Kraj</mat-label>
-      <mat-select (selectionChange)="resetCity()"  [formControl]="type=='loading' ? loadingCountryCode :  unloadingCountryCode ">
+      <mat-select (selectionChange)="resetCity()"
+                  [formControl]="type=='loading' ? loadingCountryCode :  unloadingCountryCode ">
         <mat-option value="">Kod kraju</mat-option>
 
-        @for( country of getSortedCountries();track country.code){
-          <mat-option  [value]="country.code">
+        @for (country of getSortedCountries(); track country.code) {
+          <mat-option [value]="country.code">
             {{ country.code }}
           </mat-option>
         }
@@ -47,7 +49,10 @@ export class CountrySelectorComponent {
   }
 
   getSortedCountries() {
-    return this.dataService.getCountryList().sort((a:{name:string,code:string}, b:{name:string,code:string}) => a.name.localeCompare(b.name));
+    return this.dataService.getCountryList().sort((a: { name: string, code: string }, b: {
+      name: string,
+      code: string
+    }) => a.code.localeCompare(b.code));
   }
 
 

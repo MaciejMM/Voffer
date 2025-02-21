@@ -47,7 +47,8 @@ enum ActionTypes {
   FETCH_UNLOADING_LOCATIONS_FAILURE = '[Offer] Fetch Unloading Locations Failure',
 
   RESET_LOCATIONS = '[Offer] Reset Locations',
-  RESET_UNLOADING_LOCATIONS = '[Offer] Reset Unloading Locations'
+  RESET_UNLOADING_LOCATIONS = '[Offer] Reset Unloading Locations',
+
 }
 
 

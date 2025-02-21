@@ -15,7 +15,6 @@ import { AdminEffects } from './app/store/admin/admin.effects';
 import {provideKinde} from 'kinde-angular';
 import {environment} from './environments/environment';
 import {AppEffects} from './app/store/app/app.effects';
-
 bootstrapApplication(AppComponent,
 
   {

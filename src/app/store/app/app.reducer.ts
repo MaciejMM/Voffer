@@ -3,11 +3,13 @@ import * as appActions from './app.actions';
 export type  State ={
   isTelerouteAuthenticated: boolean;
   isLoading: boolean;
+  transeuCode?: string;
 }
 
 export const initialState:State = {
   isTelerouteAuthenticated: false,
-  isLoading: false
+  isLoading: false,
+  transeuCode: undefined
 }
 
 export const appReducer = createReducer(
@@ -51,5 +53,13 @@ export const appReducer = createReducer(
     ...state,
     isLoading: false,
     isTelerouteAuthenticated: false
+  })),
+  on(appActions.setTranseuCode, (state, payload) => ({
+    ...state,
+    transeuCode: payload.code
+  })),
+  on(appActions.resetTranseuCode, (state) => ({
+    ...state,
+    transeuCode: undefined
   }))
 );

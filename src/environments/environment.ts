@@ -6,4 +6,5 @@ export const environment = {
   kindeRredirectURL: 'http://localhost:4200/',
   kindeLogoutRedirectURL: 'http://localhost:4200/',
   name: 'local',
+  transEuClientId: '72235cec-31db-45aa-b98f-61233e0471e7',
 }

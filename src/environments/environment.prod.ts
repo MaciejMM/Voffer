@@ -6,4 +6,5 @@ export const environment = {
   kindeRredirectURL: 'https://vehicle-offer-uat-be5f6f1d949e.herokuapp.com/',
   kindeLogoutRedirectURL: 'https://vehicle-offer-uat-be5f6f1d949e.herokuapp.com/',
   name: 'prod',
+  transEuClientId: '72235cec-31db-45aa-b98f-61233e0471e7',
 }

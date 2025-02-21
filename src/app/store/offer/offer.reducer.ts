@@ -20,6 +20,7 @@ export type State = {
   locationList: LocationResponse[];
   showUnloadingLocationLoader: boolean;
   unloadingLocationList: LocationResponse[];
+  transeuCode:string | undefined;
 }
 
 export const initialState: State = {
@@ -36,7 +37,8 @@ export const initialState: State = {
   showLocationLoader: false,
   locationList: [],
   showUnloadingLocationLoader: false,
-  unloadingLocationList: []
+  unloadingLocationList: [],
+  transeuCode: undefined
 }
 
 export const offerReducer = createReducer(

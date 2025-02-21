@@ -15,6 +15,14 @@ enum ActionTypes {
     FETCH_TELEROUTE_REFRESH_TOKEN_SUCCESS = '[App] Fetch Teleroute Refresh Token Success',
     FETCH_TELEROUTE_REFRESH_TOKEN_FAILURE = '[App] Fetch Teleroute Refresh Token Failure',
 
+
+    SET_TRANSEU_CODE = '[Offer] Set Transeu Code',
+    RESET_TRANSEU_CODE = '[Offer] Reset Transeu Code',
+
+    FETCH_TRANSEU_TOKEN = '[Offer] Fetch Transeu Token',
+    FETCH_TRANSEU_TOKEN_SUCCESS = '[Offer] Fetch Transeu Token Success',
+    FETCH_TRANSEU_TOKEN_FAILURE = '[Offer] Fetch Transeu Token Failure',
+
 }
 
 export const setIsLoading = createAction(
@@ -47,3 +55,25 @@ export const fetchTelerouteRefreshTokenSuccess = createAction(
 export const fetchTelerouteRefreshTokenFailure = createAction(
     ActionTypes.FETCH_TELEROUTE_REFRESH_TOKEN_FAILURE,
     props<{ error: any }>());
+export const setTranseuCode = createAction(
+  ActionTypes.SET_TRANSEU_CODE,
+  props<{ code: string }>()
+);
+
+export const resetTranseuCode = createAction(
+  ActionTypes.RESET_TRANSEU_CODE
+);
+
+export const fetchTranseuToken = createAction(
+  ActionTypes.FETCH_TRANSEU_TOKEN,
+  props<{ code: string }>()
+);
+
+export const fetchTranseuTokenSuccess = createAction(
+  ActionTypes.FETCH_TRANSEU_TOKEN_SUCCESS
+);
+
+export const fetchTranseuTokenFailure = createAction(
+  ActionTypes.FETCH_TRANSEU_TOKEN_FAILURE,
+  props<{ error: any }>()
+);
