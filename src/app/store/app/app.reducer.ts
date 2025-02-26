@@ -42,16 +42,13 @@ export const appReducer = createReducer(
   })),
   on(appActions.fetchTelerouteRefreshToken, (state) => ({
     ...state,
-    isLoading: true
   })),
   on(appActions.fetchTelerouteRefreshTokenSuccess, (state) => ({
     ...state,
-    isLoading: false,
     isTelerouteAuthenticated: true
   })),
   on(appActions.fetchTelerouteRefreshTokenFailure, (state) => ({
     ...state,
-    isLoading: false,
     isTelerouteAuthenticated: false
   })),
   on(appActions.setTranseuCode, (state, payload) => ({
@@ -60,6 +57,19 @@ export const appReducer = createReducer(
   })),
   on(appActions.resetTranseuCode, (state) => ({
     ...state,
-    transeuCode: undefined
-  }))
+    transeuCode: undefined,
+  })),
+  on(appActions.fetchTranseuToken, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+  on(appActions.fetchTranseuTokenSuccess, (state) => ({
+    ...state,
+    isLoading: false
+  })),
+  on(appActions.fetchTranseuTokenFailure, (state) => ({
+    ...state,
+    isLoading: false
+  })
+  )
 );

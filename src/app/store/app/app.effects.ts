@@ -6,6 +6,7 @@ import {TelerouteAuthService} from '../../shared/services/teleroute/teleroute-au
 import {catchError, map, mergeMap, of, switchMap} from 'rxjs';
 import * as appActions from './app.actions';
 import {TranseuTokenService} from '../../shared/services/transeu/transeu-token.service';
+import {SnackbarMessageService} from '../../shared/services/snackbar-message.service';
 
 @Injectable()
 export class AppEffects {
@@ -13,6 +14,7 @@ export class AppEffects {
   constructor(
     readonly actions$: Actions,
     readonly store: Store<AppState.State>,
+    private readonly snackbarMessageService: SnackbarMessageService,
     readonly telerouteAuthService: TelerouteAuthService,
     readonly transeuTokenService: TranseuTokenService
   ) {
@@ -27,6 +29,7 @@ export class AppEffects {
             return appActions.fetchTranseuTokenSuccess();
           }),
           catchError((error: any) => {
+            this.snackbarMessageService.showErrorMessage('Błąd podczas logowania do TRANS.EU');
             return of(appActions.fetchTranseuTokenFailure({error}));
           })
         )

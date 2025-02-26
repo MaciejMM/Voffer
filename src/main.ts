@@ -10,11 +10,14 @@ import {provideEffects} from '@ngrx/effects';
 import {OfferEffects} from './app/store/offer/offer.effects';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import * as fromApp from './app/store/global.reducer';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { AdminEffects } from './app/store/admin/admin.effects';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {AdminEffects} from './app/store/admin/admin.effects';
 import {provideKinde} from 'kinde-angular';
 import {environment} from './environments/environment';
 import {AppEffects} from './app/store/app/app.effects';
+import {providePrimeNG} from 'primeng/config';
+import {Noir} from './NoirPreset';
+
 bootstrapApplication(AppComponent,
 
   {
@@ -39,6 +42,14 @@ bootstrapApplication(AppComponent,
         logoutRedirectURL: environment.kindeLogoutRedirectURL,
       }),
       provideAnimationsAsync(),
+      providePrimeNG({
+        theme: {
+          preset: Noir,
+          options:{
+            darkModeSelector: 'none'
+          }
+        }
+      }),
       provideHttpClient(withFetch(), withInterceptorsFromDi()), provideAnimationsAsync(),
     ],
   }

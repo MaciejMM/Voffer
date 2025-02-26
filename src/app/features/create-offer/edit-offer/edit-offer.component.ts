@@ -19,6 +19,7 @@ import {EditOfferService} from '../services/edit-offer.service';
 import {ActivatedRoute} from '@angular/router';
 import {EditConfirmDialogComponent} from './edit-confirm-dialog/edit-confirm-dialog.component';
 import * as offerActions from '../../../store/offer/offer.actions';
+
 @Component({
   selector: 'app-edit-offer',
   imports: [
@@ -43,16 +44,15 @@ import * as offerActions from '../../../store/offer/offer.actions';
   templateUrl: './edit-offer.component.html',
 })
 export class EditOfferComponent extends CreateOfferPageComponent {
-  id:string;
+  id: string;
 
   constructor(override readonly formService: VehicleOfferService,
               override readonly vehicleRequestMapper: VehicleRequestMapperService,
               override readonly store: Store,
               readonly editOfferService: EditOfferService,
-              private route: ActivatedRoute,
-
+              override readonly route: ActivatedRoute,
   ) {
-    super(formService, vehicleRequestMapper, store);
+    super(formService, vehicleRequestMapper, store, route);
   }
 
   override ngOnInit() {
