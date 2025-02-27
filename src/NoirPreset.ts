@@ -1,5 +1,5 @@
 import {definePreset} from '@primeng/themes';
-import Material from '@primeng/themes/Material';
+import Material from '@primeng/themes/material';
 
 export const Noir = definePreset(Material, {
   semantic: {
