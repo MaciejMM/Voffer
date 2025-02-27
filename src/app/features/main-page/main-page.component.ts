@@ -20,9 +20,7 @@ export class MainPageComponent implements OnInit {
   ) {
   }
 
-  ngOnInit()
-    :
-    void {
+  ngOnInit(): void {
     if (this.route.snapshot.queryParamMap.has('code')
     ) {
       this.store.dispatch(appActions.setTranseuCode({code: this.route.snapshot.queryParamMap.get('code')!}));
